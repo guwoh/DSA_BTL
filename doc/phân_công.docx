@@ -1,0 +1,54 @@
+Báo cáo tổng hợp Bài tập lớn - Cấu trúc dữ liệu và Giải thuật (DSA)
+
+I. Thông tin đề tài
+Tên đề tài: Hệ thống quản lý thư viện
+Môn học: Cấu trúc dữ liệu và Giải thuật (DSA)
+Ngôn ngữ: C
+Cấu trúc lưu trữ: Danh sách liên kết
+Giao diện: Console (Text-based)
+Số lượng thành viên: 4
+
+II. Phân chia công việc cho 4 thành viên
+Thành viên 1: Thiết kế & quản lý cấu trúc dữ liệu
+- Thiết kế struct cho Sách, Người đọc, Phiếu mượn
+- Khai báo danh sách liên kết
+- Viết các hàm xử lý danh sách (add, remove, traverse...)
+Thành viên 2: Quản lý sách
+- Thêm/sửa/xóa sách
+- Tìm kiếm sách theo nhiều tiêu chí
+- Sắp xếp danh sách sách (tùy chọn)
+Thành viên 3: Quản lý người đọc và mượn trả
+- Thêm/sửa/xóa người đọc
+- Lập phiếu mượn, trả sách
+- Kiểm tra điều kiện mượn (sách còn, chưa mượn quá số quy định)
+Thành viên 4: Menu, giao diện console, thống kê
+- Tạo menu chương trình chính
+- Gọi các chức năng từ thành viên khác
+- Thống kê: sách mượn nhiều nhất, người đọc mượn nhiều nhất, số sách đang mượn
+
+III. Sơ đồ luồng chương trình (Flowchart - dạng văn bản)
+Bắt đầu chương trình
+→ Hiển thị menu chính
+→ Nhập lựa chọn từ người dùng:
+    1. Quản lý sách
+        - Thêm / Sửa / Xóa / Tìm kiếm
+    2. Quản lý người đọc
+        - Thêm / Sửa / Xóa / Tìm kiếm
+    3. Mượn và trả sách
+        - Tạo phiếu mượn / Cập nhật trả sách
+    4. Thống kê, báo cáo
+        - Sách mượn nhiều nhất, người đọc tích cực nhất
+    0. Thoát
+→ Kết thúc chương trình
+
+IV. Cách làm việc nhóm hiệu quả
+- Mỗi người phụ trách một module riêng biệt (book.c, reader.c, borrow.c, main.c...)
+- Dùng GitHub để làm việc song song, commit và push thay đổi thường xuyên
+- Thống nhất struct và giao tiếp giữa các file từ đầu (qua file .h chung)
+- Có thể tạo phiên bản MOCK để test chức năng riêng khi chưa có struct chính thức
+- Sau cùng gộp tất cả vào main menu để kiểm thử tổng thể
+
+V. Mô-đun test riêng (mock) để kiểm thử độc lập
+- Tạo struct giả lập và danh sách liên kết riêng (book_mock.h, book_mock.c)
+- Viết các hàm như addBook(), displayBooks() độc lập
+- Tạo main.c test riêng, sau này dễ thay thế bằng phần chính thức
