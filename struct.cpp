@@ -19,3 +19,37 @@ void searchByAuthor();
 void searchByYear();
 void sortBookByName();
 void sortBookByYear();
+
+struct Reader {
+    string id;
+    string name;
+    string gender;
+    string dob; 
+    string cardIssueDate; 
+    string cardExpiryDate; 
+    Reader* next;
+};
+
+void addReader();
+void editReader();
+void deleteReader();
+void searchByName();
+void searchByID();
+void listReaders();
+
+struct BorrowSlip {
+    string slipID;
+    string readerID;
+    string bookID;
+    string borrowDate;
+    string dueDate;
+    string returnDate;
+    bool isReturned;
+    BorrowSlip* next;
+};
+
+void createBorrowSlip();
+void returnBook();
+void listBorrowSlips();
+void listUnreturnedBooks();
+void checkBorrowConditions();
