@@ -9,7 +9,8 @@ struct Book {
     int quantity;
     Book* next;
 };
-
+ 
+cxz
 void addBook();
 void editBook();
 void deleteBook();
