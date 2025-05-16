@@ -1,14 +1,18 @@
 #include<string.h>
-
-typedef struct Book {
-    string id;
-    string name;
-    string author;
+/**
+ * @brief lưu trữ thông tin liên quan đến sách
+ * 
+ */
+void test_book();
+typedef struct{
+    char id;
+    char name;
+    char author;
     int year;
     int quantity;
-    Book* next;
-};
- 
+    //Book* next;
+}Book;
+
 void addBook();
 void editBook();
 void deleteBook();
@@ -17,4 +21,4 @@ void searchByID();
 void searchByAuthor();
 void searchByYear();
 void sortBookByName();
-void
+//void

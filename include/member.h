@@ -1,14 +1,19 @@
+/**
+ * @brief lưu chữ thông tin liên quan đến thành viên 
+ */
 #include<string.h>
 
-struct Reader {
-    string id;
-    string name;
-    string gender;
-    string dob; 
-    string cardIssueDate; 
-    string cardExpiryDate; 
-    Reader* next;
-};
+void test_member();
+
+typedef struct {
+    char id;
+    char name;
+    char gender;
+    char dob; 
+    char cardIssueDate; 
+    char cardExpiryDate; 
+    //Reader* next;
+}Reader;
 
 void addReader();
 void editReader();

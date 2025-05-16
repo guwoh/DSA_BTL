@@ -1,9 +1,13 @@
+/*
+định nghĩa các hàm 
+*/
 #include<stdio.h>
+#include "../include/book.h"
+#include "../include/loan.h"
+#include "../include/member.h"
+#include "../include/utils.h"
 
-#include<book.h>
-#include<loan.h>
-#include<member.h>
-// #include<struct.h>
+void test_utlis();
 
 // HÀM liên quan đến thống kê
 // Hiển thị các loại thống kế

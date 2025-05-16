@@ -1,15 +1,20 @@
-#include<string.h>
+/**
+ * @brief  lưu trữ thông tin đến sách được mượn và người mượn sách 
 
-struct BorrowSlip {
-    string slipID;
-    string readerID;
-    string bookID;
-    string borrowDate;
-    string dueDate;
-    string returnDate;
-    bool isReturned;
+ */
+#include<string.h>
+void test_loan();
+
+typedef struct{
+    char slipID;
+    char bookID;
+    char readerID;
+    char borrowDate;
+    char dueDate;
+    char returnDate;
+    //bool isReturned;
     BorrowSlip* next;
-};
+}BorrowSlip;
 
 void createBorrowSlip();
 void returnBook();
