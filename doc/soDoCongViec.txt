@@ -1,19 +1,19 @@
-                            ┌────────────────────────────┐
-                            │       DSA_BTL Project       │
-                            │     Quản lý thư viện (C)     │
-                            └────────────┬───────────────┘
-                                         │
+                            ┌───────────────────────────┐
+                            │       DSA_BTL Project     │
+                            │     Quản lý thư viện (C)  │
+                            └───────────┬───────────────┘
+                                        │
      ┌──────────────────────────────────┼────────────────────────────────┐
      ▼                                  ▼                                ▼
 ┌────────────┐                   ┌──────────────┐                  ┌────────────────┐
-│ Thành viên 1│                   │ Thành viên 2  │                  │  Thành viên 3   │
+│Thành viên 1│                   │ Thành viên 2 │                  │  Thành viên 3  │
 └────────────┘                   └──────────────┘                  └────────────────┘
       │                                  │                                │
       ▼                                  ▼                                ▼
 • Thiết kế struct                 • Quản lý sách                    • Quản lý người đọc
-  - `struct.txt`                   - `book.c`, `book.h`              - `mems.c`, `member.h`
+  -                              - `book.c`, `book.h`              - `mems.c`, `member.h`
 • Viết các hàm cơ bản             - Thêm/sửa/xóa sách              • Thêm/sửa/xóa member
-  - `utils.c`, `utils.h`          - Tìm kiếm/sắp xếp sách           - Tìm kiếm member
+                                 - Tìm kiếm/sắp xếp sách           - Tìm kiếm member
 • Dùng chung toàn hệ thống                                         • Xử lý member loan limit
 • Giao tiếp giữa modules
 
