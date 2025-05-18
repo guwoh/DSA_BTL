@@ -2,10 +2,9 @@
 định nghĩa các hàm 
 */
 #include<stdio.h>
-#include "../include/book.h"
-#include "../include/loan.h"
-#include "../include/member.h"
-#include "../include/utils.h"
+#include "book.h"
+#include "loan.h"
+#include "member.h"
 
 void test_utlis();
 
@@ -13,7 +12,7 @@ void test_utlis();
 // Hiển thị các loại thống kế
 void showStats();
 // Sách được mượn nhiều nhất
-//Book* mostBorrowedBook(); 
+void mostBorrowedBook(); 
 // Độc giả mượn nhiều sách nhất
 //Reader* topReader(); 
 // Tổng số sách đang mượn 
