@@ -1,0 +1,1 @@
+folder "output" chứa các file liên quan đến kết quả được hiển thị như file.txt hay file.bin
