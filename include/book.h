@@ -3,22 +3,25 @@
  * @brief lưu trữ thông tin liên quan đến sách
  * 
  */
-void test_book();
-typedef struct{
-    char id;
-    char name;
-    char author;
-    int year;
-    int quantity;
-    //Book* next;
+
+typedef struct { 
+    char id[20];//ma sach
+    char name[100];//ten sach
+    char author[30];//tac gia
+    int year;//nam xuat ban
+    int quantity;//so luong
 }Book;
 
-void addBook();
-void editBook();
-void deleteBook();
-void searchByName();
-void searchByID();
-void searchByAuthor();
-void searchByYear();
-void sortBookByName();
-//void
+typedef struct NodeBook {
+    Book book;
+    struct NodeBook* next;
+}NodeBook;
+
+typedef struct NodeTopic{
+    char nameTopic[100];
+    struct NodeBook* listBook;
+    struct NodeTopic* next;
+}NodeTopic;
+
+
+
