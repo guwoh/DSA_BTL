@@ -1,23 +1,31 @@
 /**
  * @brief lưu chữ thông tin liên quan đến thành viên 
  */
-#include<string.h>
 
-void test_member();
+#include<string.h>
+#ifndef MEMBER_H
+#define MEMBER_H
+
+#define MAX_NAME_LEN 50
+#define MAX_DATE_LEN 11
+#define MAX_ID_LEN 10
 
 typedef struct {
-    char id;
-    char name;
-    char gender;
-    char dob; 
-    char cardIssueDate; 
-    char cardExpiryDate; 
-    //Reader* next;
+    char id[MAX_ID_LEN];
+    char name[MAX_NAME_LEN];
+    char gender[10];
+    char dob[MAX_DATE_LEN];
+    char cardIssueDate[MAX_DATE_LEN];
+    char cardExpiryDate[MAX_DATE_LEN];
+    struct Reader* next;
 }Reader;
 
-void addReader();
-void editReader();
-void deleteReader();
-void searchByName();
-void searchByID();
-void listReaders();
+void addReader(Reader** head);
+void editReader(Reader* head);
+void deleteReader(Reader** head);
+void searchByName(Reader* head);
+void searchByID(Reader* head);
+void listReaders(Reader* head);
+void test_member(); 
+
+#endif
