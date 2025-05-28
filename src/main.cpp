@@ -16,6 +16,7 @@
 #include "../include/loan.h"
 #include "../include/member.h"
 #include "../include/utils.h"
+#include "../include/io.h"
 
 int main() {
     // menu(); // Hàm này bạn phải định nghĩa trong utils.h hoặc tương tự
