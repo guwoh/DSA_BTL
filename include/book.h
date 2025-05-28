@@ -1,8 +1,5 @@
-#include<string.h>
-/**
- * @brief lưu trữ thông tin liên quan đến sách
- * 
- */
+#ifndef BOOK_H
+#define BOOK_H
 
 typedef struct { 
     char id[20];//ma sach
@@ -23,5 +20,7 @@ typedef struct NodeTopic{
     struct NodeTopic* next;
 }NodeTopic;
 
+
+#endif
 
 

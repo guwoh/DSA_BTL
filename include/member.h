@@ -1,10 +1,9 @@
-/**
- * @brief lưu chữ thông tin liên quan đến thành viên 
- */
-
-#include<string.h>
 #ifndef MEMBER_H
 #define MEMBER_H
+
+
+#include<string.h>
+
 
 #define MAX_NAME_LEN 50
 #define MAX_DATE_LEN 11

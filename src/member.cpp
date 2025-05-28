@@ -1,6 +1,9 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include "member.h"
+#include "../include/book.h"
+#include "../include/loan.h"
+#include "../include/member.h"
+#include "../include/utils.h"
+#include "../include/io.h"
+
 
 Reader* createReader() {
     Reader* newReader = (Reader*)malloc(sizeof(Reader));
@@ -39,8 +42,8 @@ void listReaders(Reader* head) {
     printf("Danh sách người đọc:\n");
     while (current != NULL) {
         printf("ID: %s | Tên: %s | Giới tính: %s | Ngày sinh: %s | Cấp: %s | Hết hạn: %s\n",
-               current->id, current->name, current->gender,
-               current->dob, current->cardIssueDate, current->cardExpiryDate);
+            current->id, current->name, current->gender,
+            current->dob, current->cardIssueDate, current->cardExpiryDate);
         current = current->next;
     }
 }

@@ -1,6 +1,5 @@
-/*
-định nghĩa các hàm 
-*/
+#ifndef UTLIS_H
+#define UTLIS_H
 #include<stdio.h>
 #include "book.h"
 #include "loan.h"
@@ -20,3 +19,7 @@ int booksBorrowed();
 
 // MENU
 void menu(); // Menu chính
+
+
+
+#endif
