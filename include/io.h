@@ -1,12 +1,41 @@
-/**
- * @file io.h
- * @author guwoh (hiep.vh234005@sis.hust.edu.vn)
- * @brief 
- * @version 0.1
- * @date 2025-05-21
- * 
- * @copyright Copyright (c) 2025
- * 
- */
+#ifndef IO_H
+#define IO_H
 
-// khai báo các hàm sẽ dùng
+// xuat nhap du lieu
+
+/*khai bao mock struct*/
+// làm việc với linkedList
+typedef struct 
+{
+    int id; // ma so sach
+    char name[30]; // ten sach
+    int year; // nam suat ban
+
+}book;
+
+typedef struct {
+{
+    Book data;
+    
+
+}bookNode;
+
+/*ra file*/
+
+void writeText(const char *fileName, book *books, int n)
+{
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+#endif
