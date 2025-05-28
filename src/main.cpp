@@ -43,10 +43,10 @@ int main() {
     //             show_statistics();
     
     /*             Ví dụ về việc lấy dữ liệu từ file lưu trữ để xử lý hàm thống kế
-                   NodeTopic* topicHead = loadTopicsFromFile("topics.txt");
-                   BorrowSlip* slipHead = loadBorrowSlipsFromFile("slips.txt");
-                   Sau khi đã có dữ liệu từ file -> gọi hàm xử lý
-                   Book topBook = mostBorrowedBook(topicHead, slipHead);
+                NodeTopic* topicHead = loadTopicsFromFile("topics.txt");
+                BorrowSlip* slipHead = loadBorrowSlipsFromFile("slips.txt");
+                Sau khi đã có dữ liệu từ file -> gọi hàm xử lý
+                Book topBook = mostBorrowedBook(topicHead, slipHead);
 
     */
 
