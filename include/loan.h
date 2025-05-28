@@ -1,12 +1,10 @@
-/**
- * @brief  lưu trữ thông tin đến sách được mượn và người mượn sách 
+#ifndef LOAN_H
+#define LOAN_H
 
- */
+
 #include <string.h>
 #include <stdbool.h>
 
-#ifndef BORROW_H
-#define BORROW_H
 
 #define MAX_ID_LEN 20
 #define MAX_DATE_LEN 11

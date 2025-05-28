@@ -11,11 +11,13 @@
  * @copyright Copyright (c) 2025
  * 
  */
-#include <stdio.h>
+#include <iostream>
 #include "../include/book.h"
 #include "../include/loan.h"
 #include "../include/member.h"
 #include "../include/utils.h"
+#include "../include/io.h"
+
 
 int main() {
     // menu(); // Hàm này bạn phải định nghĩa trong utils.h hoặc tương tự
