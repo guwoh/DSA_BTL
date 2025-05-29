@@ -40,4 +40,4 @@ void writeBin();
 // vao file bin
 void readBin();
 
-
+// hiu is here
