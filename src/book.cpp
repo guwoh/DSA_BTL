@@ -551,3 +551,41 @@ void deleteBookOrTopic(NodeTopic*& listTopic) {
         }
     }
 }
+
+/*
+int main() {
+    int i;
+    NodeTopic* tp;
+    initTopic(&tp);
+
+    while(1) {
+        cout << "Menu:\n"
+             << "  1. Them chu de va sach" 
+             << "\n  2. Sua thong tin sach"
+             << "\n  3. Tim kiem sach"
+             << "\n  4. Xoa chu de hoac sach"
+             << "\n  5. Thoat";
+        cout << "\nBan muon lam gi?\n";
+        cin >> i;
+        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        switch(i) {
+            case 1: 
+                addNew(tp);
+                display2(tp);
+                break;
+            case 2:
+                editBook(tp);
+                break;
+            case 3:
+                searchByID1(tp);
+                break;
+            case 4:
+                deleteBookOrTopic(tp);
+                break;
+            case 5:
+                return 0;         
+        }
+        cout << " \n        ========================================================\n";
+    }
+}  
+*/
