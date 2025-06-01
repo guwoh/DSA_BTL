@@ -34,29 +34,29 @@ NodeBook* creNodeBook(char Id[], char Name[], char Author[], int Year, int Quant
 
 }
 
-void addBook(NodeBook*& listBook, Book book) {
+void addBook(NodeBook** listBook, Book book) {
     NodeBook* newBook = new NodeBook;
     newBook->book = book;
-    newBook->next = listBook;
-    listBook = newBook;
+    newBook->next = *listBook;
+    *listBook = newBook;
 }
 
-void addTopic(NodeTopic*& listTopic, const char NameTopic[], Book book[], int c) {
+void addTopic(NodeTopic** listTopic, const char NameTopic[], Book book[], int c) {
     NodeTopic* newTopic = new NodeTopic;
     strcpy(newTopic->nameTopic, NameTopic);
     newTopic->next = NULL;
     newTopic->listBook = NULL;  
     for(int i = c - 1; i >= 0; i--) {
-        addBook(newTopic->listBook, book[i]);
+        addBook(&(newTopic->listBook), book[i]);
     }
 
-    newTopic->next = listTopic;
-    listTopic = newTopic;
+    newTopic->next = *listTopic;
+    *listTopic = newTopic;
 }
 
 NodeTopic* searchTopic(NodeTopic* listTopic, const char s[]);
 
-void addNew(NodeTopic*& listTopic) {
+void addNew(NodeTopic** listTopic) {
     char nameTP[100];
     int count;//so luong sach muon them vao chu de
 
@@ -67,10 +67,10 @@ void addNew(NodeTopic*& listTopic) {
     int quantity;//so luong
 
     Book book[MAX_BOOK];
-    if(listTopic == NULL) {
+    if(*listTopic == NULL) {
         cout << "\nNhap ten chu de ma ban muon them: ";
         cin.getline(nameTP, 50);
-        cout << "\nBan muon them bao nhieu sach vao chu de nay?\n";
+        cout << "\nBan muon them bao nhieu sach vao chu de nay: ";
         cin >> count;
     
         for(int i = 0; i < count; i++) {
@@ -79,16 +79,16 @@ void addNew(NodeTopic*& listTopic) {
             cin >> id;
             cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
-            cout << "\nNhap ten sach: ";
+            cout << "Nhap ten sach: ";
             cin.getline(name, 50);
 
-            cout << "\nNhap tac gia: ";
+            cout << "Nhap tac gia: ";
             cin.getline(author, 50);
 
-            cout << "\nNhap nam xuat ban: ";
+            cout << "Nhap nam xuat ban: ";
             cin >> year;
 
-             cout << "\nNhap so luong: ";
+             cout << "Nhap so luong: ";
             cin >> quantity;
 
             cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -113,7 +113,7 @@ void addNew(NodeTopic*& listTopic) {
             cout << "\nNhap ten chu de ma ban muon them: ";
             cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             cin.getline(nameTP, 50);
-            cout << "\nBan muon them bao nhieu sach vao chu de nay?\n";
+            cout << "\nBan muon them bao nhieu sach vao chu de nay: ";
             cin >> count;
             for(int i = 0; i < count; i++) {
                 cout << "\nNhap thong tin cua sach thu " << i + 1;
@@ -121,16 +121,16 @@ void addNew(NodeTopic*& listTopic) {
                 cin >> id;
                 cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
-                cout << "\nNhap ten sach: ";
+                cout << "Nhap ten sach: ";
                 cin.getline(name, 50);
 
-                cout << "\nNhap tac gia: ";
+                cout << "Nhap tac gia: ";
                 cin.getline(author, 50);
 
-                cout << "\nNhap nam xuat ban: ";
+                cout << "Nhap nam xuat ban: ";
                 cin >> year;
 
-                cout << "\nNhap so luong: ";
+                cout << "Nhap so luong: ";
                 cin >> quantity;
 
                 cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -143,10 +143,11 @@ void addNew(NodeTopic*& listTopic) {
             }
             addTopic(listTopic, nameTP, book, count);
             return;
+            
         case 2:
             int k = 1;
             cout << "\nNhap ten chu ma ban muon them sach vao: ";
-            NodeTopic* ptrTP = listTopic;
+            NodeTopic* ptrTP = *listTopic;
             while(ptrTP != NULL) {
                 cout << k << ". " << ptrTP->nameTopic << "\n";
                 k++;
@@ -154,8 +155,8 @@ void addNew(NodeTopic*& listTopic) {
             }
             cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             cin.getline(nameTP, 50);
-            NodeTopic* ptrNodeTP = searchTopic(listTopic, nameTP);
-            cout << "\nBan muon them bao nhieu sach vao chu de nay?\n";
+            NodeTopic* ptrNodeTP = searchTopic(*listTopic, nameTP);
+            cout << "\nBan muon them bao nhieu sach vao chu de nay: ";
             cin >> count;
             for(int i = 0; i < count; i++) {
                 cout << "\nNhap thong tin cua sach thu " << i + 1;
@@ -163,16 +164,16 @@ void addNew(NodeTopic*& listTopic) {
                 cin >> id;
                 cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
-                cout << "\nNhap ten sach: ";
+                cout << "Nhap ten sach: ";
                 cin.getline(name, 50);
 
-                cout << "\nNhap tac gia: ";
+                cout << "Nhap tac gia: ";
                 cin.getline(author, 50);
 
-                cout << "\nNhap nam xuat ban: ";
+                cout << "Nhap nam xuat ban: ";
                 cin >> year;
 
-                cout << "\nNhap so luong: ";
+                cout << "Nhap so luong: ";
                 cin >> quantity;
 
                 cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -182,7 +183,7 @@ void addNew(NodeTopic*& listTopic) {
                 strcpy(book[i].author, author);
                 book[i].year = year;
                 book[i].quantity = quantity;
-                addBook(ptrNodeTP->listBook, book[i]);
+                addBook(&ptrNodeTP->listBook, book[i]);
             }
             return;
 
@@ -201,7 +202,7 @@ NodeTopic* searchTopic(NodeTopic* listTopic, const char s[]) {
 }
 void display(NodeBook* listBook); 
 
-NodeBook* searchByID1(NodeTopic*& listTopic){
+NodeBook* searchByID1(NodeTopic** listTopic){
     char i[20]; //Ten chu de muon tim
     char s[100]; //Ma sach muon tim
     int k = 1; //So thu tu di kem theo chu de
@@ -210,8 +211,9 @@ NodeBook* searchByID1(NodeTopic*& listTopic){
         cout << "\nDanh sach chu de dang trong. Vui long them sach de co the tim kiem!";
         return NULL;
     }
+
     cout << "\nBan muon tim sach cua chu de nao?\n";
-    NodeTopic* ptrNodeTP = listTopic;
+    NodeTopic* ptrNodeTP = *listTopic;
 
     while(ptrNodeTP != NULL) {
         cout << k <<". " << ptrNodeTP->nameTopic << "\n";
@@ -221,7 +223,7 @@ NodeBook* searchByID1(NodeTopic*& listTopic){
     
     while(1) {
         cin.getline(i, 50);
-        NodeTopic* ptrNodeTP = searchTopic(listTopic, i);
+        NodeTopic* ptrNodeTP = searchTopic(*listTopic, i);
         if(ptrNodeTP->listBook == NULL) {
             cout << "\nDanh sach sach cua chu de nay dang trong. Vui long them sach vao chu de de co the tim kiem!";
             return NULL;
@@ -276,6 +278,7 @@ void display(NodeBook* listBook) {
         cout << "\nDanh sach sach dang trong";
         return;
     }
+
     cout << "・Ma sach     : " << listBook->book.id << "\n"
          << "・Ten sach    : " << listBook->book.name << "\n"
          << "・Tac gia     : " << listBook->book.author << "\n"
@@ -289,6 +292,7 @@ void display2(NodeTopic* listTP) {
         cout << "\nDanh sach chu de trong";
         return;
     }
+
     cout << "\nDanh sach cac chu de: ";
     while(listTP != NULL) {         
         cout << "\n  -Ten chu de: " << listTP->nameTopic << "\n";
@@ -321,17 +325,18 @@ void display3(NodeBook* listBook) {
     }
 }
 
-void editBook(NodeTopic*& listTopic){
+void editBook(NodeTopic** listTopic){
     char i[50]; //Ten chu de muon tim
-    char s[100]; //Ma sach muon tim
+    char nameOrID[100]; //Ma sach muon tim
     int k = 1; //So thu tu di kem theo chu de
     
     if(listTopic == NULL) {
         cout << "\nDanh sach chu de dang trong. Vui long them sach!";
         return;
     }
+
     cout << "\nBan muon sua sach cua chu de nao?\n";
-    NodeTopic* ptrNodeTP1 = listTopic;
+    NodeTopic* ptrNodeTP1 = *listTopic;
 
     while(ptrNodeTP1 != NULL) {
         cout << k <<". " << ptrNodeTP1->nameTopic << "\n";
@@ -341,18 +346,18 @@ void editBook(NodeTopic*& listTopic){
 
     while(1) {
         cin.getline(i, 50);
-        NodeTopic* ptrNodeTP = searchTopic(listTopic, i);
+        NodeTopic* ptrNodeTP = searchTopic(*listTopic, i);
         if(ptrNodeTP->listBook == NULL) {
             cout << "\nDanh sach sach cua chu de nay dang trong. Vui long them sach vao chu de!";
             return;
         }
-        cout <<"\nSach ma ban muon sua co ma la gi? Hay nhap ma cua sach do: ";
+        cout <<"\nSach ma ban muon sua co ma hoac ten la gi? Hay nhap ma hoac ten cua sach do: ";
         
         while(1) {
-        cin.getline(s, 50); 
+        cin.getline(nameOrID, 50); 
         NodeBook* ptrNodeB = ptrNodeTP->listBook;
         while(ptrNodeB != NULL) {
-            if(strcmp(s, ptrNodeB->book.id) == 0) {
+            if(strcmp(nameOrID, ptrNodeB->book.id) == 0 || strcmp(nameOrID, ptrNodeB->book.name) == 0) {
                 int h; //chon muc muon sua thong tin
                 char newID[20];
                 char newName[50];
@@ -369,6 +374,7 @@ void editBook(NodeTopic*& listTopic){
                 cin >> h;
                 switch(h) {
                     case 1:
+                        cout << "\nMa sach cu la: " << ptrNodeB->book.id;
                         cout << "\nNhap Ma sach moi: ";
                         cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                         cin.getline(newID, 50);
@@ -377,6 +383,7 @@ void editBook(NodeTopic*& listTopic){
                         display(ptrNodeB);
                         return;
                     case 2:
+                        cout << "\nTen sach cu la: " << ptrNodeB->book.name;
                         cout << "\nNhap Ten sach moi: ";
                         cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                         cin.getline(newName, 50);
@@ -385,6 +392,7 @@ void editBook(NodeTopic*& listTopic){
                         display(ptrNodeB);
                         return;
                     case 3:
+                        cout << "\nTac gia cu la: " << ptrNodeB->book.author;
                         cout << "\nNhap Tac gia moi: ";
                         cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                         cin.getline(newAuthor, 50);
@@ -393,6 +401,7 @@ void editBook(NodeTopic*& listTopic){
                         display(ptrNodeB);
                         return;
                     case 4:
+                        cout << "\nNam san xuat cu la: " << ptrNodeB->book.year;
                         cout << "\nNhap Nam xuat ban moi: ";
                         cin  >> newYear;
                         ptrNodeB->book.year = newYear;
@@ -400,6 +409,7 @@ void editBook(NodeTopic*& listTopic){
                         display(ptrNodeB);
                         return;
                     case 5:
+                        cout << "\nSo luong cu la: " << ptrNodeB->book.quantity;
                         cout << "\nNhap So luong moi: ";
                         cin  >> newQuantity;
                         ptrNodeB->book.quantity = newQuantity;
@@ -410,6 +420,7 @@ void editBook(NodeTopic*& listTopic){
             }
             ptrNodeB = ptrNodeB->next;
         }
+
         cout << "\nMa sach ban nhap khong dung hoac khong co sach nao trong chu de nay co ma nhu vay.\n";
         cout << "Ban muon: ";
             cout << "\n1. Tiep tuc tim sach de chinh sua";
@@ -429,7 +440,7 @@ void editBook(NodeTopic*& listTopic){
     }
 }
 
-void deleteBookOrTopic(NodeTopic*& listTopic) {
+void deleteBookOrTopic(NodeTopic** listTopic) {
     char nameTP[100];
     char nameAndId[100];//ten sach va ma sach de nhap
     
@@ -447,36 +458,39 @@ void deleteBookOrTopic(NodeTopic*& listTopic) {
 
     switch(i) {
         case 1: {
-            if(listTopic == NULL) {
+            if(*listTopic == NULL) {
                 cout << "\nDanh sach chu de dang trong.";
                 return;
             }
             cout << "\nBan muon xoa chu de nao?\n";
 
-            NodeTopic* ptrNodeTP1 = listTopic;
+            NodeTopic* ptrNodeTP1 = *listTopic;
             int k = 1;
             while(ptrNodeTP1 != NULL) {
                 cout << k <<". " << ptrNodeTP1->nameTopic << "\n";
                 k++;
                 ptrNodeTP1 = ptrNodeTP1->next;    
             }
+
             cout << "\nHay nhap ten chu de ma ban muon xoa: ";
             while(1) {
                 cin.getline(nameTP, 50);
-                NodeTopic* ptrNodeTP = searchTopic(listTopic, nameTP);
+                NodeTopic* ptrNodeTP = searchTopic(*listTopic, nameTP);
                 if(ptrNodeTP == NULL) {
                     cout << "\nKhong tim thay chu de. Hay nhap lai ten chu de muon xoa: ";
                     continue;
                 }
-                if(ptrNodeTP == listTopic) {
-                    listTopic = listTopic->next;
+
+                if(ptrNodeTP == *listTopic) {
+                    *listTopic = (*listTopic)->next;
                     delete ptrNodeTP;
                     cout << "\nDa xoa thanh cong chu de: " << nameTP;
                     cout << "\nDanh sach cac chu de hien tai: ";
-                    display2(listTopic);
+                    display2(*listTopic);
                     return;
                 }
-                NodeTopic* prevNodeTP = listTopic;
+
+                NodeTopic* prevNodeTP = *listTopic;
                 while(prevNodeTP != NULL && prevNodeTP->next != ptrNodeTP) {
                    prevNodeTP = prevNodeTP->next;
                 }
@@ -484,69 +498,74 @@ void deleteBookOrTopic(NodeTopic*& listTopic) {
                 cout << "\nDa xoa thanh cong chu de: " << nameTP;
                 delete ptrNodeTP;
                 cout << "\nDanh sach cac chu de hien tai: ";
-                display2(listTopic);
+                display2(*listTopic);
                 return;
             }
             break;
         }
 
         case 2: {
-            if(listTopic == NULL) {
+            if(*listTopic == NULL) {
                 cout << "\nDanh sach chu de dang trong.";
                 return;
             }
             cout << "\nBan muon xoa chu de nao?\n";
 
-            NodeTopic* ptrNodeTP1 = listTopic;
+            NodeTopic* ptrNodeTP1 = *listTopic;
             int k = 1;
             while(ptrNodeTP1 != NULL) {
                 cout << k <<". " << ptrNodeTP1->nameTopic << "\n";
                 k++;
                 ptrNodeTP1 = ptrNodeTP1->next;    
             }
+
             cout << "\nHay nhap ten chu de ma ban muon xoa: ";
             while(1){
                 cin.getline(nameTP, 50);
-                NodeTopic* ptrNodeTP = searchTopic(listTopic, nameTP);
+                NodeTopic* ptrNodeTP = searchTopic(*listTopic, nameTP);
+
                 if(ptrNodeTP == NULL) {
                     cout << "\nKhong tim thay chu de. Hay nhap lai ten chu de muon xoa: ";
                     continue;
                 }
+
                 if(ptrNodeTP->listBook == NULL) {
                     cout << "\nChu de dang trong. Vui long them sach vao chu de de tiep tuc!";
                     return;
                 }
+
                 cout << "\nNhap ten hoac ma sach ma ban muon xoa: ";
-                //cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                
                 while(1) {
-                    bool done = false;
                     cin.getline(nameAndId, 50);
-                    NodeBook* ptrNodeB = ptrNodeTP->listBook;
-                    NodeBook* ptrNodeBookCurrent = new NodeBook;
-                    while(ptrNodeB != NULL ) {
-                        if(strcmp(nameAndId, ptrNodeB->book.name) == 0 || strcmp(nameAndId, ptrNodeB->book.id) == 0) {
-                            ptrNodeBookCurrent = ptrNodeB; 
-                            done = true;
+                    NodeBook* ptr = ptrNodeTP->listBook;
+                    NodeBook* prev = NULL;
+
+                    while (ptr != NULL) {
+                        if (strcmp(nameAndId, ptr->book.name) == 0 || strcmp(nameAndId, ptr->book.id) == 0) {
+                            break;
                         }
-                        ptrNodeB = ptrNodeB->next;
+                        prev = ptr;
+                        ptr = ptr->next;
                     }
-                    if(done == false) {
-                        cout << "\nKhong tim thay sach co ma hay ten nhu vay. Vui long nhap lai ma hoac ten sach ma ban muon xoa: ";
+
+                    if (ptr == NULL) {
+                        cout << "\nKhong tim thay sach co ma hay ten nhu vay. Vui long nhap lai: ";
                         continue;
                     }
 
-                    NodeBook* prevB = ptrNodeTP->listBook;
-                    while(prevB != NULL && prevB->next != ptrNodeBookCurrent){
-                        prevB = prevB->next;
+                    if (prev == NULL) { // xoá node đầu
+                        ptrNodeTP->listBook = ptr->next;
+                    } else {
+                        prev->next = ptr->next;
                     }
-                    prevB->next = ptrNodeBookCurrent->next;
-                    cout << "\nDa xoa thanh cong chu de: " << ptrNodeBookCurrent->book.name;
-                    delete ptrNodeBookCurrent;
-                    cout << "\nDanh sach sach cua chu de " <<  nameTP << " hien tai:\n";
+
+                    cout << "\nDa xoa thanh cong sach: " << ptr->book.name;
+                    delete ptr;
+                    cout << "\nDanh sach sach cua chu de " << nameTP << " hien tai:\n";
                     display3(ptrNodeTP->listBook);
                     return;
                 }
-                
             }
         }
     }
@@ -570,22 +589,22 @@ int main() {
         cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         switch(i) {
             case 1: 
-                addNew(tp);
+                addNew(&tp);
                 display2(tp);
                 break;
             case 2:
-                editBook(tp);
+                editBook(&tp);
                 break;
             case 3:
-                searchByID1(tp);
+                searchByID1(&tp);
                 break;
             case 4:
-                deleteBookOrTopic(tp);
+                deleteBookOrTopic(&tp);
                 break;
             case 5:
                 return 0;         
         }
         cout << " \n        ========================================================\n";
     }
-}  
-*/
+} 
+    */
