@@ -9,7 +9,7 @@
 #define MAX_DATE_LEN 11
 #define MAX_ID_LEN 10
 
-typedef struct {
+typedef struct Reader{
     char id[MAX_ID_LEN];
     char name[MAX_NAME_LEN];
     char gender[10];
