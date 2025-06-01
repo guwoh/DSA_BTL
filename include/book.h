@@ -36,6 +36,7 @@ NodeBook* creNodeBook(); //Tao NodeBook
 void addBook(); //Them sach vao danh sach sach
 void addTopic(); //Them chu de
 void addNew();  //Nhap cac thong tin de ve chu de va sach de tien hanh them vao
+
 NodeTopic* searchTopic(); //Tim kiem chu de
 void editBook(); // sua thong tin cua sach
 void deleteBookOrTopic();//xoa chu de hoac xoa sach bat ky
