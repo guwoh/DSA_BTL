@@ -13,169 +13,143 @@ void test_utlis()
 }
 
 // HÀM liên quan đến thống kê
-// Hiển thị các loại thống kế
-// void showStats();
 // Sách được mượn nhiều nhất
 /* 
 Tổng quan ý tưởng:
 Duyệt từng phần tử trong danh sách Book và với mỗi phần tử, duyệt toàn bộ danh sách BorrowSlip để đếm số lần mượn của sách đó.
 */ 
-Book mostBorrowedBook(NodeTopic* topicHead, BorrowSlip* slipHead) {
-    Book mostBorrowed;
-    int maxCount = 0;
-    memset(&mostBorrowed, 0, sizeof(Book)); // reset rác
+int countBookBorrowed(BorrowSlip* slipList, const char* bookID) {
+    int count = 0;
+    while (slipList != NULL) {
+        if (strcmp(slipList->bookID, bookID) == 0) {
+            count++;
+        }
+        slipList = slipList->next;
+    }
+    return count;
+} // Đếm số lần sách được mượn
 
-    for (NodeTopic* topic = topicHead; topic != NULL; topic = topic->next) {
+void updateTop3Books(TopBook top3[], Book* book, int count) {
+    for (int i = 0; i < 3; i++) {
+        if (top3[i].book == NULL || count > top3[i].count) {
+            for (int j = 2; j > i; j--) {
+                top3[j] = top3[j - 1];
+            }
+            top3[i].book = book;
+            top3[i].count = count;
+            break;
+        }
+    }
+}
+
+void findTop3Books(NodeTopic* topicList, BorrowSlip* slipList) {
+    TopBook top3[3] = {{NULL, 0}, {NULL, 0}, {NULL, 0}};
+
+    for (NodeTopic* topic = topicList; topic != NULL; topic = topic->next) {
         for (NodeBook* bookNode = topic->listBook; bookNode != NULL; bookNode = bookNode->next) {
-            int count = 0;
-
-            // Duyệt toàn bộ danh sách phiếu mượn
-            for (BorrowSlip* slip = slipHead; slip != NULL; slip = slip->next) {
-                for (BorrowedBook* borrowed = slip->borrowedBooks; borrowed != NULL; borrowed = borrowed->next) {
-                    if (strcmp(borrowed->bookID, bookNode->book.id) == 0) {
-                        count += borrowed->quantity; // cộng tổng số sách đã mượn
-                    }
-                }
-            }
-
-            if (count > maxCount) {
-                maxCount = count;
-                mostBorrowed = bookNode->book;
-            }
+            int count = countBookBorrowed(slipList, bookNode->book.id);
+            updateTop3Books(top3, &bookNode->book, count);
         }
     }
 
-    return mostBorrowed;
+    printf("Top sách được mượn nhiều nhất:\n");
+    int printed = 0;
+    for (int i = 0; i < 3; i++) {
+        if (top3[i].book != NULL) {
+            printf("%d. %s (ID: %s) - %d lượt mượn\n", i + 1,
+                   top3[i].book->name,
+                   top3[i].book->id,
+                   top3[i].count);
+            printed++;
+        }
+    }
+
+    if (printed == 0) {
+        printf("Không có sách nào được mượn.\n");
+    }
 }
 
 // Độc giả mượn nhiều sách nhất
-/* Ý tưởng: Duyệt từng độc giả trong danh sách Reader
-   Với mỗi độc giả, duyệt toàn bộ danh sách BorrowSlip:
-   So sánh slip.readerID với reader.id
-   Cộng dồn số lượng sách từ slip.borrowedBooks
+/* 
+Ý tưởng: Duyệt từng độc giả trong danh sách Reader
+Với mỗi độc giả, duyệt toàn bộ danh sách BorrowSlip:
+So sánh slip.readerID với reader.id
+Cộng dồn số lượng sách từ slip.borrowedBooks
 */
-Reader mostActiveReader(Reader* readerHead, BorrowSlip* slipHead) {
-    Reader result;
-    memset(&result, 0, sizeof(Reader));
-    int maxCount = 0;
-
-    for (Reader* r = readerHead; r != NULL; r = r->next) {
-        int count = 0;
-
-        for (BorrowSlip* s = slipHead; s != NULL; s = s->next) {
-            if (strcmp(r->id, s->readerID) == 0) {
-                for (BorrowedBook* bb = s->borrowedBooks; bb != NULL; bb = bb->next) {
-                    count += bb->quantity;
-                }
-            }
+int countBorrowedBooks(BorrowSlip* slipList, const char* readerID) {
+    int count = 0;
+    while (slipList != NULL) {
+        if (strcmp(slipList->readerID, readerID) == 0) {
+            count++;
         }
+        slipList = slipList->next;
+    }
+    return count;
+} // Đếm số sách đã mượn của độc giả
 
-        if (count > maxCount) {
-            maxCount = count;
-            result = *r;  // sao chép dữ liệu reader
+// Tìm kiếm top 3 độc giả mượn sách nhiều nhất
+void updateTop3(TopReader top3[], Reader* reader, int count) {
+    if (count == 0) return; // Bỏ qua nếu không mượn gì
+
+    for (int i = 0; i < 3; i++) {
+        if (top3[i].reader == NULL || count > top3[i].borrowCount) {
+            // Dời các phần tử từ dưới lên
+            for (int j = 2; j > i; j--) {
+                top3[j] = top3[j - 1];
+            }
+
+            // Gán người đọc vào vị trí i
+            top3[i].reader = reader;
+            top3[i].borrowCount = count;
+            break;
+        }
+    }
+}
+
+void findTop3Readers(Reader* readerList, BorrowSlip* slipList) {
+    TopReader top3[3] = {{NULL, 0}, {NULL, 0}, {NULL, 0}};
+
+    // Duyệt danh sách độc giả bằng vòng for
+    for (Reader* current = readerList; current != NULL; current = current->next) {
+        int count = countBorrowedBooks(slipList, current->id);
+        updateTop3(top3, current, count);
+    }
+
+    printf("Top độc giả mượn nhiều sách nhất:\n");
+
+    int num = 0;
+    for (int i = 0; i < 3; i++) {
+        if (top3[i].reader != NULL) {
+            printf("%d. %s (ID: %s) - %d sách\n", i + 1,
+                   top3[i].reader->name,
+                   top3[i].reader->id,
+                   top3[i].borrowCount);
+            num++;
         }
     }
 
-    return result;
+    if (num == 0) {
+        printf("Không có độc giả nào mượn sách.\n");
+    }
 }
 
 // Tổng số sách đang mượn
-/*
-Nâng cấp:
-Với struct BorrowSlip hiện tại, thì mỗi phiếu mượn chỉ mượn được 1 sách
-Trường hợp mượn nhiều sách một lần thì có thể sử dụng struct lổng
-Cx nên tính đến trường hợp mượn nhiều sách một lần, một sách nhiều quyển nhma trả rải rác 
-Ví dụ:
-typedef struct BorrowedBook {
-    char bookID[20];
-    int quantity;
-    int quantityReturned;  // số lượng đã trả (0 nếu chưa trả)
-    struct BorrowedBook* next;
-} BorrowedBook;
-
-typedef struct BorrowSlip {
-    char slipID[20];
-    char readerID[20];
-    char borrowDate[11];
-    char dueDate[11];
-    int isReturned;             // 0 = còn sách chưa trả, 1 = trả hết
-    BorrowedBook* borrowedBooks;
-    struct BorrowSlip* next;
-} BorrowSlip;
-Khi này hàm đếm tổng số sách đang mượn sẽ là:
-int countBorrowedBooks(BorrowSlip* borrowHead) {
-    int total = 0;
-
-    for (BorrowSlip* slip = borrowHead; slip != NULL; slip = slip->next) {
-        if (slip->isReturned == 1) continue; // Nếu phiếu đã trả hết thì bỏ qua
-
-        BorrowedBook* bbook = slip->borrowedBooks;
-        while (bbook != NULL) {
-            int notReturned = bbook->quantity - bbook->quantityReturned;
-            if (notReturned > 0) {
-                total += notReturned;
-            }
-            bbook = bbook->next;
-        }
-    }
-    return total;
-}
-*/ 
-int booksBorrowed(BorrowSlip* borrowHead) {
+void hienThiBorrowedBooks(BorrowSlip* head) {
     int count = 0;
-    for (BorrowSlip* p = borrowHead; p != NULL; p = p->next) {
-        if (p->isReturned == 0) {  // Chưa trả
+    BorrowSlip* current = head;
+
+    while (current != NULL) {
+        if (strlen(current->returnDate) == 0) {
             count++;
+            printf("Phiếu mượn ID: %s, Mã sách: %s, Mã độc giả: %s, Ngày mượn: %s, Hạn trả: %s\n",
+                current->slipID,
+                current->bookID,
+                current->readerID,
+                current->borrowDate,
+                current->dueDate);
         }
-    }
-    return count;
-}
-
-// Xây dựng hàm đọc dữ liệu từ file - có vẻ dùng chung được
-// Hàm đọc danh sách phiếu mượn
-BorrowSlip* loadBorrowSlipsFromFile(const char* filename) {
-    FILE* f = fopen(filename, "r");
-    if (!f) return NULL;
-
-    BorrowSlip* head = NULL;
-    BorrowSlip* tail = NULL;
-
-    int n;
-    fscanf(f, "%d\n", &n); // số phiếu mượn
-    for (int i = 0; i < n; ++i) {
-        BorrowSlip* slip = (BorrowSlip*)malloc(sizeof(BorrowSlip));
-        slip->borrowedBooks = NULL;
-        slip->next = NULL;
-
-        fscanf(f, "%s %s %s %s %d\n", slip->slipID, slip->readerID, slip->borrowDate, slip->dueDate, &slip->isReturned);
-
-        int m;
-        fscanf(f, "%d\n", &m); // số sách trong phiếu
-
-        BorrowedBook* bTail = NULL;
-        for (int j = 0; j < m; ++j) {
-            BorrowedBook* bb = (BorrowedBook*)malloc(sizeof(BorrowedBook));
-            bb->next = NULL;
-            fscanf(f, "%s %d %d\n", bb->bookID, &bb->quantity, &bb->quantityReturned);
-
-            if (!slip->borrowedBooks)
-                slip->borrowedBooks = bTail = bb;
-            else {
-                bTail->next = bb;
-                bTail = bb;
-            }
-        }
-
-        if (!head) head = tail = slip;
-        else {
-            tail->next = slip;
-            tail = slip;
-        }
+        current = current->next;
     }
 
-    fclose(f);
-    return head;
+    printf("Tổng số sách đang được mượn chưa trả: %d\n", count);
 }
-
-// MENU
-void menu(); // Menu chính
