@@ -25,6 +25,5 @@ void deleteReader(Reader** head);
 void searchByName(Reader* head);
 void searchByID(Reader* head);
 void listReaders(Reader* head);
-void test_member(); 
 
 #endif

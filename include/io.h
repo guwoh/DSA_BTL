@@ -1,53 +1,29 @@
 #ifndef IO_H
 #define IO_H
 
-// xuat nhap du lieu
+#include "book.h"
+#include "member.h"
 
-/*khai bao mock struct*/
-// làm việc với linkedList
-typedef struct // struct book
-{
-    int id; // ma so sach
-    char name[30]; // ten sach
-    int year; // nam suat ban
+// book.h
+// all this  function below use for book
 
-}book;
-
-typedef struct bookNode // struct node
-{
-    Book data;
-    struct bookNode *next;
-}bookNode;
-
-// thêm sách vào đầu danh sách
-void addBookAtHead();
-
-// thêm sách vào cuối danh sách 
-void addBookAtTail();
-
-// in danh sách
-void printBook();
-
-// xóa sách theo tiêu đề 
-void deleteBookByTitle();
-
-
-
-/*ra file*/
-// ra file text
-void writeText();
-
-// ra file bin
-void writeBin();
-
-
-/*vao file*/
-// vao file bin
-void readBin();
+void bookWriteText(); // write text file for human
+void bookWriteBin(); // write bin file for machine
+void bookReadBin(); // machine read bin flie to recovery data of linked list Topic Book
 
 
 
 
 
+
+
+
+
+// member.h
+// all this function below use for reader
+
+void readerWriteText(); // write text file for human
+void readerWriteBin(); // write bin file for machine
+void readerReadBin(); // machine read bin flie to recovery data of linked list Reader 
 
 #endif
