@@ -31,18 +31,19 @@ typedef struct NodeTopic{
 }NodeTopic;
 
 
-void initTopic(); //Khoi tao 
-NodeBook* creNodeBook(); //Tao NodeBook
-void addBook(); //Them sach vao danh sach sach
-void addTopic(); //Them chu de
-void addNew();  //Nhap cac thong tin de ve chu de va sach de tien hanh them vao
+void initTopic(NodeTopic** nb); //Khoi tao 
+NodeBook* creNodeBook(char Id[], char Name[], char Author[], int Year, int Quantity); //Tao NodeBook
+void addBook(NodeBook** listBook, Book book); //Them sach vao danh sach sach
+void addTopic(NodeTopic** listTopic, const char NameTopic[], Book book[], int c); //Them chu de
+void addNew(NodeTopic** listTopic);  //Nhap cac thong tin de ve chu de va sach de tien hanh them vao
 
-NodeTopic* searchTopic(); //Tim kiem chu de
-void editBook(); // sua thong tin cua sach
-void deleteBookOrTopic();//xoa chu de hoac xoa sach bat ky
-void display(); //Hien thi danh sach sach cua 1 chu de
-void display2(); //Hien thi tat ca thu vien
-void display3(); //Hien thi 1 sach cu the
+NodeTopic* searchTopic(NodeTopic* listTopic, const char s[]); //Tim kiem chu de
+void editBook(NodeTopic** listTopic); // sua thong tin cua sach
+void deleteBookOrTopic(NodeTopic** listTopic);//xoa chu de hoac xoa sach bat ky
+NodeBook* searchByID1(NodeTopic** listTopic); 
+void display(NodeBook* listBook); //Hien thi danh sach sach cua 1 chu de
+void display2(NodeTopic* listTP); //Hien thi tat ca thu vien
+void display3(NodeBook* listBook); //Hien thi 1 sach cu the
 #endif
 
 

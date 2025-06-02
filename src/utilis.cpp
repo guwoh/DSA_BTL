@@ -21,8 +21,10 @@ Duyệt từng phần tử trong danh sách Book và với mỗi phần tử, du
 int countBookBorrowed(BorrowSlip* slipList, const char* bookID) {
     int count = 0;
     while (slipList != NULL) {
-        if (strcmp(slipList->bookID, bookID) == 0) {
-            count++;
+        for (int i = 0; i < slipList->numBorrowed; i++) {
+            if (strcmp(slipList->books[i].bookId, bookID) == 0) {
+                count += slipList->books[i].quantity;
+            }
         }
         slipList = slipList->next;
     }
@@ -52,11 +54,11 @@ void findTop3Books(NodeTopic* topicList, BorrowSlip* slipList) {
         }
     }
 
-    printf("Top sách được mượn nhiều nhất:\n");
+    printf("Top sach duoc muon nhieu nhat:\n");
     int printed = 0;
     for (int i = 0; i < 3; i++) {
         if (top3[i].book != NULL) {
-            printf("%d. %s (ID: %s) - %d lượt mượn\n", i + 1,
+            printf("%d. %s (ID: %s) - %d lan\n", i + 1,
                    top3[i].book->name,
                    top3[i].book->id,
                    top3[i].count);
@@ -65,7 +67,7 @@ void findTop3Books(NodeTopic* topicList, BorrowSlip* slipList) {
     }
 
     if (printed == 0) {
-        printf("Không có sách nào được mượn.\n");
+        printf("Khong sach nao duoc muon.\n");
     }
 }
 
@@ -80,12 +82,14 @@ int countBorrowedBooks(BorrowSlip* slipList, const char* readerID) {
     int count = 0;
     while (slipList != NULL) {
         if (strcmp(slipList->readerID, readerID) == 0) {
-            count++;
+            for (int i = 0; i < slipList->numBorrowed; i++) {
+                count += slipList->books[i].quantity;
+            }
         }
         slipList = slipList->next;
     }
     return count;
-} // Đếm số sách đã mượn của độc giả
+} // Đếm số lượng sách mượn của độc giả
 
 // Tìm kiếm top 3 độc giả mượn sách nhiều nhất
 void updateTop3(TopReader top3[], Reader* reader, int count) {
@@ -109,27 +113,27 @@ void updateTop3(TopReader top3[], Reader* reader, int count) {
 void findTop3Readers(Reader* readerList, BorrowSlip* slipList) {
     TopReader top3[3] = {{NULL, 0}, {NULL, 0}, {NULL, 0}};
 
-    // Duyệt danh sách độc giả bằng vòng for
     for (Reader* current = readerList; current != NULL; current = current->next) {
         int count = countBorrowedBooks(slipList, current->id);
         updateTop3(top3, current, count);
     }
 
-    printf("Top độc giả mượn nhiều sách nhất:\n");
+    printf("Top doc gia muon sach nhieu nhat:\n");
+    int printed = 0;
 
-    int num = 0;
     for (int i = 0; i < 3; i++) {
         if (top3[i].reader != NULL) {
-            printf("%d. %s (ID: %s) - %d sách\n", i + 1,
+            printf("%d. %s (ID: %s) - %d cuon sach\n",
+                   i + 1,
                    top3[i].reader->name,
                    top3[i].reader->id,
                    top3[i].borrowCount);
-            num++;
+            printed++;
         }
     }
 
-    if (num == 0) {
-        printf("Không có độc giả nào mượn sách.\n");
+    if (printed == 0) {
+        printf("Khong tim thay doc gia nao.\n");
     }
 }
 
@@ -139,17 +143,19 @@ void hienThiBorrowedBooks(BorrowSlip* head) {
     BorrowSlip* current = head;
 
     while (current != NULL) {
-        if (strlen(current->returnDate) == 0) {
-            count++;
-            printf("Phiếu mượn ID: %s, Mã sách: %s, Mã độc giả: %s, Ngày mượn: %s, Hạn trả: %s\n",
-                current->slipID,
-                current->bookID,
-                current->readerID,
-                current->borrowDate,
-                current->dueDate);
+        for (int i = 0; i < current->numBorrowed; i++) {
+            if (!current->isReturned[i]) {
+                count++;
+                printf("ID doc gia: %s\n", current->readerID);
+                printf("  - ID sach: %s\n", current->books[i].bookId);
+                printf("  - So quyen: %d\n", current->books[i].quantity);
+                printf("  - Ngay muon: %s\n", current->borrowDate);
+                printf("  - Han tra: %s\n\n", current->returnDate[0] ? current->returnDate : "Chưa trả");
+            }
         }
         current = current->next;
     }
 
-    printf("Tổng số sách đang được mượn chưa trả: %d\n", count);
+    printf("Tong so sach dang duoc muon: %d\n", count);
 }
+

@@ -27,7 +27,7 @@ void createBorrowSlip(BorrowSlip** head, Reader* readerList, NodeTopic* topicLis
 void returnBook(BorrowSlip* head);
 void listBorrowSlips(BorrowSlip* head);
 void listUnreturnedBooks(BorrowSlip* head, const char* readerId);
-void checkBorrowStatus(BorrowSlip* head, const char* readerId);
+void checkBorrowStatus(BorrowSlip* head, const char* readerId, int* result);
 
 // Hàm kiểm thử
 void test_loan();

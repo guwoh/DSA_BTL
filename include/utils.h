@@ -1,5 +1,5 @@
-#ifndef UTLIS_H
-#define UTLIS_H
+#ifndef UTILS_H
+#define UTILS_H
 #include<stdio.h>
 
 typedef struct {

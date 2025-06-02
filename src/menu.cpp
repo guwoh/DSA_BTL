@@ -1,4 +1,5 @@
 #include<stdio.h>
+#include <stdlib.h>
 
 #include "../include/book.h"
 #include "../include/loan.h"
@@ -9,98 +10,44 @@
 
 // MENU chính
 void hienThiMenuChinh() {
-    printf("===== HỆ THỐNG QUẢN LÝ THƯ VIỆN =====\n");
-    printf("1. Quản lý sách\n");
-    printf("2. Quản lý người đọc\n");
-    printf("3. Quản lý mượn/trả sách\n");
-    printf("4. Thống kê\n");
-    printf("0. Thoát\n");
-}
-
-// MENU phần thống kê
-void menuThongKe() {
-    printf("----- MENU THỐNG KÊ -----\n");
-    printf("1. Thống kê sách mượn nhiều nhất\n");
-    printf("2. Thống kê độc giả mượn nhiều nhất\n");
-    printf("3. Thống kê sách đang được mượn\n");
-    printf("0. Quay lại menu chính\n");
-}
-
-void choiceThongKe() {
-    int choice;
-    do {
-        menuThongKe();
-        printf("Chọn số liệu muốn thống kê: ");
-        scanf("%d", &choice);
-
-        switch (choice) {
-            case 1:
-                printf("Thực hiện thống kê sách mượn nhiều nhất...\n");
-                void findTop3Books(NodeTopic* topicList, BorrowSlip* slipList);
-                break;
-            case 2:
-                printf("Thực hiện thống kê độc giả mượn nhiều nhất...\n");
-                void findTop3Readers(Reader* readerList, BorrowSlip* slipList);
-                break;
-            case 3:
-                printf("Thực hiện thống kê sách được mượn nhiều nhất...\n");
-                void hienThiBorrowedBooks(BorrowSlip* head);
-                break;
-            case 0:
-                printf("Quay lại menu chính...\n");
-                break;
-            default:
-                printf("Lựa chọn không hợp lệ. Vui lòng thử lại.\n");
-        }
-        printf("\n");
-    } while (choice != 0);
+    printf("===== HE THONG QUAN LY THU VIEN =====\n");
+    printf("1. Quan ly sach\n");
+    printf("2. Quan ly nguoi doc\n");
+    printf("3. Quan ly muon/tra sach\n");
+    printf("4. Thong ke\n");
+    printf("0. Thoat\n");
 }
 
 // MENU phần Book
 void menuBook() {
-    printf("----- MENU QUẢN LÝ SÁCH -----\n");
-    printf("1. Khởi tạo chủ đề\n");
-    printf("2. Thêm chủ đề\n");
-    printf("3. Thêm sách mới\n");
-    printf("4. Sửa thông tin sách\n");
-    printf("5. Xóa sách hoặc chủ đề\n");
-    printf("6. Hiển thị sách của 1 chủ đề\n");
-    printf("7. Hiển thị tất cả thư viện\n");
-    printf("8. Hiển thị thông tin 1 sách cụ thể\n");
-    printf("0. Quay lại menu chính\n");
+    printf("----- MENU QUAN LY SACH -----\n");
+    printf("1. Them chu de va sach\n");
+    printf("2. Sua thong tin sach\n");
+    printf("3. Tim kiem sach\n");
+    printf("4. Xoa chu de hoac sach\n");
+    printf("0. Quay lai menu chinh\n");
 }
 
-void choiceBook() {
+void choiceBook(NodeTopic* tp) {
     int choice;
     do {
         menuBook();
-        printf("Chọn chức năng quản lý sách: ");
+        printf("Chon chuc nang quan ly sach: ");
         scanf("%d", &choice);
 
         switch (choice) {
             case 1:
-                initTopic();
+                addNew(&tp);
+                display2(tp);
                 break;
             case 2:
-                addTopic();
+                editBook(&tp);
                 break;
             case 3:
-                addNew();
+                searchByID1(&tp);
                 break;
             case 4:
-                editBook();
-                break;
-            case 5:
-                deleteBookOrTopic();
-                break;
-            case 6:
-                display();
-                break;
-            case 7:
-                display2();
-                break;
-            case 8:
-                display3();
+                deleteBookOrTopic(&tp);
                 break;
             case 0:
                 printf("Quay lại menu chính...\n");
@@ -114,18 +61,19 @@ void choiceBook() {
 
 // MENU phần Member
 void menuMember() {
-    printf("----- MENU QUẢN LÝ ĐỘC GIẢ -----\n");
-    printf("1. Thêm độc giả\n");
-    printf("2. Sửa thông tin độc giả\n");
-    printf("3. Xóa độc giả\n");
-    printf("4. Tìm kiếm độc giả theo tên\n");
-    printf("5. Tìm kiếm độc giả theo ID\n");
-    printf("6. Hiển thị danh sách độc giả\n");
+    printf("----- MENU QUAN LY DOC GIA -----\n");
+    printf("1. Them nguoi doc\n");
+    printf("2. Sua thong tin nguoi doc\n");
+    printf("3. Xoa nguoi doc\n");
+    printf("4. Tim kiem nguoi doc theo ID\n");
+    printf("5. Tim kiem nguoi doc theo ten\n");
+    printf("6. Hien thi danh sach nguoi doc\n");
     printf("0. Quay lại menu chính\n");
 }
 
-void choiceMember(Reader** head) {
+void choiceMember() {
     int choice;
+    Reader* head = NULL; // Khởi tạo danh sách người đọc
     do {
         menuMember();
         printf("Chọn chức năng quản lý độc giả: ");
@@ -133,22 +81,22 @@ void choiceMember(Reader** head) {
 
         switch (choice) {
             case 1:
-                addReader(head);
+                addReader(&head);
                 break;
             case 2:
-                editReader(*head);
+                editReader(head);
                 break;
             case 3:
-                deleteReader(head);
+                deleteReader(&head);
                 break;
             case 4:
-                searchByName(*head);
+                searchByID(head);
                 break;
             case 5:
-                searchByID(*head);
+                searchByName(head);
                 break;
             case 6:
-                listReaders(*head);
+                listReaders(head);
                 break;
             case 0:
                 printf("Quay lại menu chính...\n");
@@ -158,21 +106,30 @@ void choiceMember(Reader** head) {
         }
         printf("\n");
     } while (choice != 0);
+    // Giải phóng bộ nhớ
+    while (head) {
+        Reader* temp = head;
+        head = head->next;
+        free(temp);
+    }
 }
 
 // MENU phần Loan
 void menuLoan() {
-    printf("----- MENU QUẢN LÝ MƯỢN/TRẢ SÁCH -----\n");
-    printf("1. Tạo phiếu mượn sách\n");
-    printf("2. Trả sách\n");
-    printf("3. Hiển thị danh sách phiếu mượn\n");
-    printf("4. Hiển thị sách chưa trả\n");
-    printf("5. Kiểm tra điều kiện mượn\n");
-    printf("0. Quay lại menu chính\n");
+    printf("----- MENU QUAN LY MUON/TRA SACH -----\n");
+    printf("1. Tao phieu muon sach\n");
+    printf("2. Tra sach\n");
+    printf("3. Hien thi danh sach phieu muon\n");
+    printf("4. Hien thi danh sach chua tra\n");
+    printf("5. Kiem tra dieu kien muon\n");
+    printf("0. Quay lai menu chinh\n");
 }
 
-void choiceLoan(BorrowSlip** head) {
+void choiceLoan() {
     int choice;
+    BorrowSlip* borrowList = nullptr;
+    Reader* readerList = nullptr; // Giả sử đã có danh sách người đọc
+    NodeTopic* topicList = nullptr; // Giả sử đã có danh sách chủ đề sách
     do {
         menuLoan();
         printf("Chọn chức năng: ");
@@ -180,25 +137,68 @@ void choiceLoan(BorrowSlip** head) {
 
         switch (choice) {
             case 1:
-                createBorrowSlip(head);
+                createBorrowSlip(&borrowList, readerList, topicList);
                 break;
             case 2:
-                returnBook(*head);
+                returnBook(borrowList);
                 break;
             case 3:
-                listBorrowSlips(*head);
+                listBorrowSlips(borrowList);
                 break;
             case 4:
-                listUnreturnedBooks(*head);
+                char readerId[MAX_ID_LEN];
+                printf("Enter reader ID to list unreturned books: ");
+                scanf("%s", readerId);
+                listUnreturnedBooks(borrowList, readerId);
                 break;
             case 5:
-                checkBorrowConditions(*head);
+                int result;
+                checkBorrowStatus(borrowList, readerId, &result);
                 break;
             case 0:
                 printf("Quay lại menu chính...\n");
                 break;
             default:
                 printf("Lựa chọn không hợp lệ. Vui lòng thử lại.\n");
+        }
+        printf("\n");
+    } while (choice != 0);
+}
+
+// MENU phần thống kê
+void menuThongKe() {
+    printf("----- MENU THONG KE -----\n");
+    printf("1. Thong ke sach duoc muon nhieu nhat\n");
+    printf("2. Thong ke doc gia muon nhieu nhat\n");
+    printf("3. Thong ke so sach dang duoc muon\n");
+    printf("0. Quay lai menu chinh\n");
+}
+
+void choiceThongKe() {
+    int choice;
+    do {
+        menuThongKe();
+        printf("Chon so lieu muon thong ke: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                printf("Thuc hien thong ke muon sach nhieu nhat...\n");
+                void findTop3Books(NodeTopic* topicList, BorrowSlip* slipList);
+                break;
+            case 2:
+                printf("Thuc hien thong ke doc gia muon nhieu nhat...\n");
+                void findTop3Readers(Reader* readerList, BorrowSlip* slipList);
+                break;
+            case 3:
+                printf("Thuc hien thong ke so sach dang duoc muon...\n");
+                void hienThiBorrowedBooks(BorrowSlip* head);
+                break;
+            case 0:
+                printf("Quay lai menu chinh...\n");
+                break;
+            default:
+                printf("Lua chon khong hop le. Vui long thu lai.\n");
         }
         printf("\n");
     } while (choice != 0);
