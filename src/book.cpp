@@ -145,14 +145,16 @@ void addNew(NodeTopic** listTopic) {
             addTopic(listTopic, nameTP, book, count);
             return;
         case 2:
-            int k = 1;
-            cout << "\nNhap ten chu ma ban muon them sach vao: \n";
+            
             NodeTopic* ptrTP = *listTopic;
+            cout << "\nDanh sach chu de hien tai: \n";
             while(ptrTP != NULL) {
-                cout << k << ". " << ptrTP->nameTopic << "\n";
-                k++;
+                cout << "- " << ptrTP->nameTopic << "\n";
+    
                 ptrTP = ptrTP->next;
             }
+            cout << "\nNhap ten chu ma ban muon them sach vao: ";
+
             cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             while(1) {
                 cin.getline(nameTP, 50);
@@ -217,21 +219,23 @@ NodeBook* searchByID1(NodeTopic** listTopic){
         cout << "\nDanh sach chu de dang trong. Vui long them sach de co the tim kiem!";
         return NULL;
     }
-    cout << "\nBan muon tim sach cua chu de nao?\n";
-    NodeTopic* ptrNodeTP = *listTopic;
+    
+    NodeTopic* ptrTP = *listTopic;
 
-    while(ptrNodeTP != NULL) {
-        cout << k <<". " << ptrNodeTP->nameTopic << "\n";
-        k++;
-        ptrNodeTP = ptrNodeTP->next;    
+    cout << "\nDanh sach chu de hien tai: \n";
+    while(ptrTP != NULL) {
+        cout << "- " << ptrTP->nameTopic << "\n";
+    
+        ptrTP = ptrTP->next;
     }
+        cout << "\nNhap ten chu ma ban muon tim: ";
     
     while(1) {
         cin.getline(i, 50);
         NodeTopic* ptrNodeTP = searchTopic(*listTopic, i);
 
         if(ptrNodeTP == NULL) {
-            cout << "\nKhong tim thay chu de ma ban muon them sach vao. Vui long nhap lai ten chu de: ";
+            cout << "\nKhong tim thay chu de ma ban muon tim. Vui long nhap lai ten chu de: ";
             continue;
         }
 
@@ -262,7 +266,7 @@ NodeBook* searchByID1(NodeTopic** listTopic){
                     cout << "\nNhap lai Ten hoac Ma sach ban muon tim: ";
                     cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                     break;
-                case 2:
+                default:
                     return NULL;
             }
         }
@@ -308,7 +312,10 @@ void display2(NodeTopic* listTP) {
 }
 
 void display3(NodeBook* listBook) {
-    if(listBook == NULL) return;
+    if(listBook == NULL){
+        cout << "\nDanh sach dang trong";
+        return;
+    } 
     NodeBook* ptrNodeB = listBook;
     while(ptrNodeB != NULL) {
         cout << "- Ma sach     : " << ptrNodeB->book.id << "\n"
@@ -329,18 +336,26 @@ void editBook(NodeTopic** listTopic){
         cout << "\nDanh sach chu de dang trong. Vui long them sach!";
         return;
     }
-    cout << "\nBan muon sua sach cua chu de nao?\n";
-    NodeTopic* ptrNodeTP1 = *listTopic;
 
-    while(ptrNodeTP1 != NULL) {
-        cout << k <<". " << ptrNodeTP1->nameTopic << "\n";
-        k++;
-        ptrNodeTP1 = ptrNodeTP1->next;    
+    NodeTopic* ptrTP = *listTopic;
+
+    cout << "\nDanh sach chu de hien tai: \n";
+    while(ptrTP != NULL) {
+        cout << "- " << ptrTP->nameTopic << "\n";
+    
+        ptrTP = ptrTP->next;
     }
+    cout << "\nNhap ten chu ma ban muon sua: ";
 
     while(1) {
         cin.getline(i, 50);
         NodeTopic* ptrNodeTP = searchTopic(*listTopic, i);
+        
+        if(ptrNodeTP == NULL) {
+            cout << "\nKhong tim thay chu de ma ban muon sua. Vui long nhap lai ten chu de: ";
+            continue;
+        }
+
         if(ptrNodeTP->listBook == NULL) {
             cout << "\nDanh sach sach cua chu de nay dang trong. Vui long them sach vao chu de!";
             return;
@@ -455,16 +470,17 @@ void deleteBookOrTopic(NodeTopic** listTopic) {
                 cout << "\nDanh sach chu de dang trong.";
                 return;
             }
-            cout << "\nBan muon xoa chu de nao?\n";
 
-            NodeTopic* ptrNodeTP1 = *listTopic;
-            int k = 1;
-            while(ptrNodeTP1 != NULL) {
-                cout << k <<". " << ptrNodeTP1->nameTopic << "\n";
-                k++;
-                ptrNodeTP1 = ptrNodeTP1->next;    
+            NodeTopic* ptrTP = *listTopic;
+
+            cout << "\nDanh sach chu de hien tai: \n";
+            while(ptrTP != NULL) {
+                cout << "- " << ptrTP->nameTopic << "\n";
+    
+                ptrTP = ptrTP->next;
             }
-            cout << "\nHay nhap ten chu de ma ban muon xoa: ";
+            cout << "\nNhap ten chu ma ban muon xoa: ";
+
             while(1) {
                 cin.getline(nameTP, 50);
                 NodeTopic* ptrNodeTP = searchTopic(*listTopic, nameTP);
@@ -499,17 +515,17 @@ void deleteBookOrTopic(NodeTopic** listTopic) {
                 cout << "\nDanh sach chu de dang trong.";
                 return;
             }
-            cout << "\nBan muon xoa chu de nao?\n";
 
-            NodeTopic* ptrNodeTP1 = *listTopic;
-            int k = 1;
-            while(ptrNodeTP1 != NULL) {
-                cout << k <<". " << ptrNodeTP1->nameTopic << "\n";
-                k++;
-                ptrNodeTP1 = ptrNodeTP1->next;    
+            NodeTopic* ptrTP = *listTopic;
+
+            cout << "\nDanh sach chu de hien tai: \n";
+            while(ptrTP != NULL) {
+                cout << "- " << ptrTP->nameTopic << "\n";
+    
+                ptrTP = ptrTP->next;
             }
+            cout << "\nNhap ten chu ma ban muon xoa: ";
 
-            cout << "\nHay nhap ten chu de ma ban muon xoa: ";
             while(1){
                 cin.getline(nameTP, 50);
                 NodeTopic* ptrNodeTP = searchTopic(*listTopic, nameTP);
@@ -560,6 +576,7 @@ void deleteBookOrTopic(NodeTopic** listTopic) {
 }
 
 /*
+
 int main() {
     int i;
     NodeTopic* tp;
@@ -589,10 +606,11 @@ int main() {
             case 4:
                 deleteBookOrTopic(&tp);
                 break;
-            case 5:
+            default:
                 return 0;         
         }
         cout << " \n        ========================================================\n";
     }
-} 
-    */
+}
+    
+*/
