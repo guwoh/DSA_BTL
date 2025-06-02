@@ -1,25 +1,31 @@
 #ifndef UTLIS_H
 #define UTLIS_H
 #include<stdio.h>
-#include "book.h"
-#include "loan.h"
-#include "member.h"
+
+typedef struct {
+    Reader* reader;
+    int borrowCount;
+} TopReader; // Top độc giả mượn sách
+
+typedef struct {
+    Book* book;
+    int count;
+} TopBook; // Top sách mượn nhiều nhất
 
 void test_utlis();
 
 // HÀM liên quan đến thống kê
-// Hiển thị các loại thống kế
-void showStats();
-// Sách được mượn nhiều nhất
-void mostBorrowedBook(); 
-// Độc giả mượn nhiều sách nhất
-//Reader* topReader(); 
+// Top 3 sách được mượn nhiều nhất
+int countBookBorrowed();
+void updateTop3Books();
+void findTop3Books();
+
+// Top 3 độc giả mượn nhiều sách nhất
+int countBorrowedBooks(); // Hàm đếm số sách mượn của độc giả
+void updateTop3(); // Cập nhật top 3 độc giả mượn sách
+void findTop3Readers(); // Tìm kiếm top 3 độc giả mượn sách nhiều nhất
+
 // Tổng số sách đang mượn 
-int booksBorrowed(); 
-
-// MENU
-void menu(); // Menu chính
-
-
+void hienThiBorrowedBooks(); 
 
 #endif
