@@ -1,8 +1,8 @@
 #include <string.h>
 #include <stdbool.h>
 
-#ifndef BORROW_H
-#define BORROW_H
+#ifndef LOAN_H
+#define LOAN_H
 
 #define MAX_ID_LEN 20
 #define MAX_DATE_LEN 11
