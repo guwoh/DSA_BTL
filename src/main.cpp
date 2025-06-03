@@ -21,6 +21,10 @@
 
 
 int main() {
+    NodeTopic* topicList = NULL;
+    initTopic(&topicList); // Khởi tạo danh sách chủ đề sách
+    Reader* readerList = NULL;
+    BorrowSlip* borrowList = NULL;
     int luaChon;
 
     do {
@@ -32,16 +36,12 @@ int main() {
         printf("\n-----------------------------------------\n");
         switch (luaChon) {
             case 1:
-                NodeTopic* topicList = NULL;
-                initTopic(&topicList); // Khởi tạo danh sách chủ đề sách
                 choiceBook(topicList);
                 break;
             case 2:
-                Reader* readerList = NULL;
                 choiceMember(&readerList);
                 break;
             case 3:
-                BorrowSlip* borrowList = NULL;
                 choiceLoan(&borrowList);
                 break;
             case 4:

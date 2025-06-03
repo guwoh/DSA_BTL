@@ -7,7 +7,7 @@
 
 #define MAX_NAME_LEN 50
 #define MAX_DATE_LEN 11
-#define MAX_ID_LEN 10
+#define MAX_ID_LEN 20
 
 struct Reader{
     char id[MAX_ID_LEN];
