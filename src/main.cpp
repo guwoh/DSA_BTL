@@ -35,40 +35,14 @@ int main() {
                 NodeTopic* topicList = NULL;
                 initTopic(&topicList); // Khởi tạo danh sách chủ đề sách
                 choiceBook(topicList);
-                // Giải phóng bộ nhớ
-                NodeTopic* currentTopic = topicList;
-                while (currentTopic != NULL) {
-                    NodeTopic* tempTopic = currentTopic;
-                    currentTopic = currentTopic->next;
-
-                    NodeBook* currentBook = tempTopic->listBook;
-                    while (currentBook != NULL) {
-                        NodeBook* tempBook = currentBook;
-                        currentBook = currentBook->next;
-                        delete tempBook;
-                    }
-                    delete tempTopic;
-                }
-                topicList = NULL;
                 break;
             case 2:
                 Reader* readerList = NULL;
                 choiceMember(&readerList);
-                // Giải phóng bộ nhớ
-                while (readerList) {
-                    Reader* temp = readerList;
-                    readerList = readerList->next;
-                    free(temp);
-                }
                 break;
             case 3:
                 BorrowSlip* borrowList = NULL;
                 choiceLoan(&borrowList);
-                while (borrowList) {
-                    BorrowSlip* temp = borrowList;
-                    borrowList = borrowList->next;
-                    free(temp);
-                }   
                 break;
             case 4:
                 choiceThongKe(topicList, borrowList, readerList);
