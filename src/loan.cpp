@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cstring>
+#include <limits>
 #include "../include/book.h"
 #include "../include/loan.h"
 #include "../include/member.h"
@@ -7,51 +8,63 @@
 #include "../include/io.h"
 using namespace std;
 
-void test_loan() {
-    cout << "loan.h is working" << endl;
+// Kiểm tra người đọc có tồn tại
+bool readerExists(const char* readerID, Reader* readerList) {
+    for (Reader* r = readerList; r != NULL; r = r->next) {
+        if (strcmp(r->id, readerID) == 0) return true;
+    }
+    return false;
+}
+
+// Kiểm tra sách có tồn tại
+bool bookExists(const char* bookID, NodeTopic* topicList) {
+    for (NodeTopic* t = topicList; t != NULL; t = t->next) {
+        for (NodeBook* b = t->listBook; b != NULL; b = b->next) {
+            if (strcmp(b->book.id, bookID) == 0) return true;
+        }
+    }
+    return false;
 }
 
 // Tạo phiếu mượn mới
-BorrowSlip* createBorrowSlip() {
+void createBorrowSlip(BorrowSlip** head, Reader* readerList, NodeTopic* topicList) {
     BorrowSlip* newSlip = new BorrowSlip;
 
-    cout << "Nhap ma phieu muon: ";
-    cin.ignore();
-    cin.getline(newSlip->slipID, MAX_ID_LEN);
+    cout << "Nhap ID phieu muon: ";
+    cin >> newSlip->slipID;
 
-    cout << "Nhap ID doc gia: ";
-    cin.getline(newSlip->readerID, MAX_ID_LEN);
+    cout << "Nhap ID nguoi doc: ";
+    cin >> newSlip->readerID;
+    if (!readerExists(newSlip->readerID, readerList)) {
+        cout << "Nguoi doc voi ID \"" << newSlip->readerID << "\" khong ton tai.\n";
+        delete newSlip;
+        return;
+    }
 
     cout << "Nhap ID sach: ";
-    cin.getline(newSlip->bookID, MAX_ID_LEN);
+    cin >> newSlip->bookID;
+    if (!bookExists(newSlip->bookID, topicList)) {
+        cout << "Sach voi ID \"" << newSlip->bookID << "\" khong ton tai.\n";
+        delete newSlip;
+        return;
+    }
 
     cout << "Nhap ngay muon (dd/mm/yyyy): ";
-    cin.getline(newSlip->borrowDate, MAX_DATE_LEN);
+    cin >> newSlip->borrowDate;
 
-    cout << "Nhap han tra (dd/mm/yyyy): ";
-    cin.getline(newSlip->dueDate, MAX_DATE_LEN);
+    cout << "Nhap ngay tra (dd/mm/yyyy): ";
+    cin >> newSlip->dueDate;
 
-    newSlip->returnDate[0] = '\0'; // Chưa trả
-    newSlip->next = nullptr;
+    newSlip->returnDate[0] = '\0'; // chưa trả
+    newSlip->next = *head;
+    *head = newSlip;
 
-    return newSlip;
+    cout << "Tao phieu muon thanh cong.\n";
 }
 
 // Thêm phiếu mượn
-void addBorrowSlip(BorrowSlip** head) {
-    BorrowSlip* newSlip = createBorrowSlip();
-
-    if (*head == nullptr) {
-        *head = newSlip;
-    } else {
-        BorrowSlip* current = *head;
-        while (current->next != nullptr) {
-            current = current->next;
-        }
-        current->next = newSlip;
-    }
-
-    cout << "Them phieu muon thanh cong!" << endl;
+void addBorrowSlip(BorrowSlip** head, Reader* readerList, NodeTopic* topicList) {
+    createBorrowSlip(head, readerList, topicList);
 }
 
 // Trả sách (gán returnDate)
@@ -193,7 +206,6 @@ void checkBorrowConditions(BorrowSlip* head) {
         current = current->next;
     }
 }
-/*
 // Hàm kiểm thử
 void test_loan() {
     BorrowSlip* head = nullptr;
@@ -213,7 +225,7 @@ void test_loan() {
 
         switch (choice) {
             case 1:
-                addBorrowSlip(&head);
+                addBorrowSlip(&head, nullptr, nullptr);    
                 break;
             case 2:
                 returnBook(head);
@@ -228,9 +240,6 @@ void test_loan() {
                 searchSlipByReader(head);
                 break;
             case 6:
-                listUnreturnedBooks(head);
-                break;
-            case 7:
                 checkBorrowConditions(head);
                 break;
             case 0:
@@ -247,4 +256,8 @@ void test_loan() {
         head = head->next;
         delete temp;
     }
+}
+/*int main() {
+    test_loan();
+    return 0;
 }*/
