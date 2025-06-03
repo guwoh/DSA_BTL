@@ -1,16 +1,3 @@
-/**
- * @file main.c
- * @author guwoh (hoanghiephaikanamaconggmail.com)
- * @author (you@domain.com)
- * @author (you@domain.com)
- * @author (you@domain.com)
- * @brief 
- * @version 0.1
- * @date 2025-05-16
- * 
- * @copyright Copyright (c) 2025
- *hehe 
- */
 #include <iostream>
 #include "../include/book.h"
 #include "../include/loan.h"

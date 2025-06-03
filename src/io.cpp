@@ -21,8 +21,10 @@
 
 #define MAX_TOPIC 100
 
-const char* TEXT_FILE = "doc/outPut/txt/book.txt";
-const char* BIN_FILE = "doc/outPut/bin/book.dat";
+const char* TEXT_FILE_BOOK = "doc/outPut/txt/book.txt";
+const char* BIN_FILE_BOOK = "doc/outPut/bin/book.bin";
+const char* TEXT_FILE_READER = "doc/outPut/txt/reader.txt";
+const char* BIN_FILE_READER = "doc/outPut/bin/reader.bin";
 
 // =============================
 // GHI DỮ LIỆU DẠNG TEXT
@@ -157,11 +159,14 @@ void bookReadBin(NodeTopic** head, const char* fileName)
 }
 
 
+// =============================
+// READER - TEXT
+// =============================
+void readerWriteText(Reader* head, const char* fileName) {
+    char fullPath[256];
+    snprintf(fullPath, sizeof(fullPath), "doc/outPut/txt/%s", fileName);
 
-// reader 
-// Ghi danh sách người đọc vào file văn bản (.txt)
-void readerWriteText(Reader* head) {
-    FILE* fp = fopen(TEXT_READER_FILE, "w");
+    FILE* fp = fopen(fullPath, "w");
     if (!fp) {
         perror("Không thể mở file để ghi văn bản");
         return;
@@ -176,12 +181,17 @@ void readerWriteText(Reader* head) {
     }
 
     fclose(fp);
-    printf("Đã lưu người đọc vào file text thành công.\n");
+    printf("Đã lưu người đọc vào file text thành công: %s\n", fullPath);
 }
 
-// Ghi danh sách người đọc vào file nhị phân (.bin)
-void readerWriteBin(Reader* head) {
-    FILE* fp = fopen(BIN_READER_FILE, "wb");
+// =============================
+// READER - BINARY
+// =============================
+void readerWriteBin(Reader* head, const char* fileName) {
+    char fullPath[256];
+    snprintf(fullPath, sizeof(fullPath), "doc/outPut/bin/%s", fileName);
+
+    FILE* fp = fopen(fullPath, "wb");
     if (!fp) {
         perror("Không thể mở file để ghi nhị phân");
         return;
@@ -194,12 +204,14 @@ void readerWriteBin(Reader* head) {
     }
 
     fclose(fp);
-    printf("Đã lưu người đọc vào file binary thành công.\n");
+    printf("Đã lưu người đọc vào file binary thành công: %s\n", fullPath);
 }
 
-// Đọc danh sách người đọc từ file nhị phân (.bin)
-void readerReadBin(Reader** head) {
-    FILE* fp = fopen(BIN_READER_FILE, "rb");
+void readerReadBin(Reader*& head, const char* fileName) { // truyền tham chiếu giống C++
+    char fullPath[256];
+    snprintf(fullPath, sizeof(fullPath), "doc/outPut/bin/%s", fileName);
+
+    FILE* fp = fopen(fullPath, "rb");
     if (!fp) {
         perror("Không thể mở file để đọc nhị phân");
         return;
@@ -216,15 +228,15 @@ void readerReadBin(Reader** head) {
         *newReader = temp;
         newReader->next = NULL;
 
-        if (*head == NULL) {
-            *head = newReader;
+        if (head == NULL) {
+            head = newReader;
         } else {
-            Reader* last = *head;
+            Reader* last = head;
             while (last->next != NULL) last = last->next;
             last->next = newReader;
         }
     }
 
     fclose(fp);
-    printf("Đã đọc người đọc từ file binary thành công.\n");
+    printf("Đã đọc người đọc từ file binary thành công: %s\n", fullPath);
 }
