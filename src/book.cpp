@@ -46,6 +46,7 @@ void addTopic(NodeTopic** listTopic, const char NameTopic[], Book book[], int c)
     strcpy(newTopic->nameTopic, NameTopic);
     newTopic->next = NULL;
     newTopic->listBook = NULL;  
+
     for(int i = c - 1; i >= 0; i--) {
         addBook(&(newTopic->listBook), book[i]);
     }
@@ -143,50 +144,57 @@ void addNew(NodeTopic** listTopic) {
             }
             addTopic(listTopic, nameTP, book, count);
             return;
-            
         case 2:
-            int k = 1;
-            cout << "\nNhap ten chu ma ban muon them sach vao: ";
+            
             NodeTopic* ptrTP = *listTopic;
+            cout << "\nDanh sach chu de hien tai: \n";
             while(ptrTP != NULL) {
-                cout << k << ". " << ptrTP->nameTopic << "\n";
-                k++;
+                cout << "- " << ptrTP->nameTopic << "\n";
+    
                 ptrTP = ptrTP->next;
             }
+            cout << "\nNhap ten chu ma ban muon them sach vao: ";
+
             cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            cin.getline(nameTP, 50);
-            NodeTopic* ptrNodeTP = searchTopic(*listTopic, nameTP);
-            cout << "\nBan muon them bao nhieu sach vao chu de nay: ";
-            cin >> count;
-            for(int i = 0; i < count; i++) {
-                cout << "\nNhap thong tin cua sach thu " << i + 1;
-                cout << "\nNhap ma sach: ";
-                cin >> id;
-                cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            while(1) {
+                cin.getline(nameTP, 50);
+                NodeTopic* ptrNodeTP = searchTopic(*listTopic, nameTP);
+                if(ptrNodeTP == NULL) {
+                    cout << "\nKhong tim thay chu de ma ban muon them sach vao. Vui long nhap lai ten chu de: ";
+                    continue;
+                }
 
-                cout << "Nhap ten sach: ";
-                cin.getline(name, 50);
+                cout << "\nBan muon them bao nhieu sach vao chu de nay: ";
+                cin >> count;
+                for(int i = 0; i < count; i++) {
+                    cout << "\nNhap thong tin cua sach thu " << i + 1;
+                    cout << "\nNhap ma sach: ";
+                    cin >> id;
+                    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
-                cout << "Nhap tac gia: ";
-                cin.getline(author, 50);
+                    cout << "Nhap ten sach: ";
+                    cin.getline(name, 50);
 
-                cout << "Nhap nam xuat ban: ";
-                cin >> year;
+                    cout << "Nhap tac gia: ";
+                    cin.getline(author, 50);
 
-                cout << "Nhap so luong: ";
-                cin >> quantity;
+                    cout << "Nhap nam xuat ban: ";
+                    cin >> year;
 
-                cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                    cout << "Nhap so luong: ";
+                    cin >> quantity;
 
-                strcpy(book[i].id, id);
-                strcpy(book[i].name, name);
-                strcpy(book[i].author, author);
-                book[i].year = year;
-                book[i].quantity = quantity;
-                addBook(&ptrNodeTP->listBook, book[i]);
-            }
-            return;
+                    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
+                    strcpy(book[i].id, id);
+                    strcpy(book[i].name, name);
+                    strcpy(book[i].author, author);
+                    book[i].year = year;
+                    book[i].quantity = quantity;
+                    addBook(&ptrNodeTP->listBook, book[i]);
+                }
+                return;
+        }
     }
 }
 
@@ -207,23 +215,30 @@ NodeBook* searchByID1(NodeTopic** listTopic){
     char s[100]; //Ma sach muon tim
     int k = 1; //So thu tu di kem theo chu de
     
-    if(listTopic == NULL) {
+    if(*listTopic == NULL) {
         cout << "\nDanh sach chu de dang trong. Vui long them sach de co the tim kiem!";
         return NULL;
     }
+    
+    NodeTopic* ptrTP = *listTopic;
 
-    cout << "\nBan muon tim sach cua chu de nao?\n";
-    NodeTopic* ptrNodeTP = *listTopic;
-
-    while(ptrNodeTP != NULL) {
-        cout << k <<". " << ptrNodeTP->nameTopic << "\n";
-        k++;
-        ptrNodeTP = ptrNodeTP->next;    
+    cout << "\nDanh sach chu de hien tai: \n";
+    while(ptrTP != NULL) {
+        cout << "- " << ptrTP->nameTopic << "\n";
+    
+        ptrTP = ptrTP->next;
     }
+        cout << "\nNhap ten chu ma ban muon tim: ";
     
     while(1) {
         cin.getline(i, 50);
         NodeTopic* ptrNodeTP = searchTopic(*listTopic, i);
+
+        if(ptrNodeTP == NULL) {
+            cout << "\nKhong tim thay chu de ma ban muon tim. Vui long nhap lai ten chu de: ";
+            continue;
+        }
+
         if(ptrNodeTP->listBook == NULL) {
             cout << "\nDanh sach sach cua chu de nay dang trong. Vui long them sach vao chu de de co the tim kiem!";
             return NULL;
@@ -251,24 +266,10 @@ NodeBook* searchByID1(NodeTopic** listTopic){
                     cout << "\nNhap lai Ten hoac Ma sach ban muon tim: ";
                     cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                     break;
-                case 2:
+                default:
                     return NULL;
             }
         }
-        cout << "Chu de ban chon khong dung. Vui long chon lai dung chu de!\n";
-        cout << "Ban muon: ";
-            cout << "\n1. Tiep tuc tim";
-            cout << "\n2. Thoat\n";
-            int m;
-            cin >> m;
-            switch(m) {
-                case 1: 
-                    cout << "\nNhap lai ten chu de ban muon tim: ";
-                    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                    break;
-                case 2:
-                    return NULL;
-            }
     }
 }
 
@@ -278,12 +279,11 @@ void display(NodeBook* listBook) {
         cout << "\nDanh sach sach dang trong";
         return;
     }
-
-    cout << "・Ma sach     : " << listBook->book.id << "\n"
-         << "・Ten sach    : " << listBook->book.name << "\n"
-         << "・Tac gia     : " << listBook->book.author << "\n"
-         << "・Nam xuat ban: " << listBook->book.year << "\n"
-         << "・So luong    : " << listBook->book.quantity << "\n";
+    cout << "- Ma sach     : " << listBook->book.id << "\n"
+         << "- Ten sach    : " << listBook->book.name << "\n"
+         << "- Tac gia     : " << listBook->book.author << "\n"
+         << "- Nam xuat ban: " << listBook->book.year << "\n"
+         << "- So luong    : " << listBook->book.quantity << "\n";
        
 }
 
@@ -292,18 +292,17 @@ void display2(NodeTopic* listTP) {
         cout << "\nDanh sach chu de trong";
         return;
     }
-
     cout << "\nDanh sach cac chu de: ";
     while(listTP != NULL) {         
-        cout << "\n  -Ten chu de: " << listTP->nameTopic << "\n";
-        cout << "  -Danh sach cac cuon sach trong chu de: ";
+        cout << "\n  - Ten chu de: " << listTP->nameTopic << "\n";
+        cout << "  - Danh sach cac cuon sach trong chu de: ";
             NodeBook* ptrbook = listTP->listBook;
             while(ptrbook != NULL) {
                 cout << "\n    +Ten sach: " << ptrbook->book.name
-                     << "\n     ・Ma sach     : " << ptrbook->book.id
-                     << "\n     ・Tac gia     : " << ptrbook->book.author
-                     << "\n     ・Nam xuat ban: " << ptrbook->book.year
-                     << "\n     ・So luong    : " << ptrbook->book.quantity
+                     << "\n     _Ma sach     : " << ptrbook->book.id
+                     << "\n     _Tac gia     : " << ptrbook->book.author
+                     << "\n     _Nam xuat ban: " << ptrbook->book.year
+                     << "\n     _So luong    : " << ptrbook->book.quantity
                      << "\n";
                 ptrbook = ptrbook->next;
             }
@@ -313,14 +312,17 @@ void display2(NodeTopic* listTP) {
 }
 
 void display3(NodeBook* listBook) {
-    if(listBook == NULL) return;
+    if(listBook == NULL){
+        cout << "\nDanh sach dang trong";
+        return;
+    } 
     NodeBook* ptrNodeB = listBook;
     while(ptrNodeB != NULL) {
-        cout << "・Ma sach     : " << ptrNodeB->book.id << "\n"
-         << "・Ten sach    : " << ptrNodeB->book.name << "\n"
-         << "・Tac gia     : " << ptrNodeB->book.author << "\n"
-         << "・Nam xuat ban: " << ptrNodeB->book.year << "\n"
-         << "・So luong    : " << ptrNodeB->book.quantity << "\n";
+        cout << "- Ma sach     : " << ptrNodeB->book.id << "\n"
+         << "- Ten sach    : " << ptrNodeB->book.name << "\n"
+         << "- Tac gia     : " << ptrNodeB->book.author << "\n"
+         << "- Nam xuat ban: " << ptrNodeB->book.year << "\n"
+         << "- So luong    : " << ptrNodeB->book.quantity << "\n";
         ptrNodeB = ptrNodeB->next;
     }
 }
@@ -330,23 +332,30 @@ void editBook(NodeTopic** listTopic){
     char nameOrID[100]; //Ma sach muon tim
     int k = 1; //So thu tu di kem theo chu de
     
-    if(listTopic == NULL) {
+    if(*listTopic == NULL) {
         cout << "\nDanh sach chu de dang trong. Vui long them sach!";
         return;
     }
 
-    cout << "\nBan muon sua sach cua chu de nao?\n";
-    NodeTopic* ptrNodeTP1 = *listTopic;
+    NodeTopic* ptrTP = *listTopic;
 
-    while(ptrNodeTP1 != NULL) {
-        cout << k <<". " << ptrNodeTP1->nameTopic << "\n";
-        k++;
-        ptrNodeTP1 = ptrNodeTP1->next;    
+    cout << "\nDanh sach chu de hien tai: \n";
+    while(ptrTP != NULL) {
+        cout << "- " << ptrTP->nameTopic << "\n";
+    
+        ptrTP = ptrTP->next;
     }
+    cout << "\nNhap ten chu ma ban muon sua: ";
 
     while(1) {
         cin.getline(i, 50);
         NodeTopic* ptrNodeTP = searchTopic(*listTopic, i);
+        
+        if(ptrNodeTP == NULL) {
+            cout << "\nKhong tim thay chu de ma ban muon sua. Vui long nhap lai ten chu de: ";
+            continue;
+        }
+
         if(ptrNodeTP->listBook == NULL) {
             cout << "\nDanh sach sach cua chu de nay dang trong. Vui long them sach vao chu de!";
             return;
@@ -420,7 +429,6 @@ void editBook(NodeTopic** listTopic){
             }
             ptrNodeB = ptrNodeB->next;
         }
-
         cout << "\nMa sach ban nhap khong dung hoac khong co sach nao trong chu de nay co ma nhu vay.\n";
         cout << "Ban muon: ";
             cout << "\n1. Tiep tuc tim sach de chinh sua";
@@ -444,7 +452,7 @@ void deleteBookOrTopic(NodeTopic** listTopic) {
     char nameTP[100];
     char nameAndId[100];//ten sach va ma sach de nhap
     
-    if(listTopic == NULL) {
+    if(*listTopic == NULL) {
         cout << "\nDanh sach chu de dang trong.";
         return;
     }
@@ -462,17 +470,17 @@ void deleteBookOrTopic(NodeTopic** listTopic) {
                 cout << "\nDanh sach chu de dang trong.";
                 return;
             }
-            cout << "\nBan muon xoa chu de nao?\n";
 
-            NodeTopic* ptrNodeTP1 = *listTopic;
-            int k = 1;
-            while(ptrNodeTP1 != NULL) {
-                cout << k <<". " << ptrNodeTP1->nameTopic << "\n";
-                k++;
-                ptrNodeTP1 = ptrNodeTP1->next;    
+            NodeTopic* ptrTP = *listTopic;
+
+            cout << "\nDanh sach chu de hien tai: \n";
+            while(ptrTP != NULL) {
+                cout << "- " << ptrTP->nameTopic << "\n";
+    
+                ptrTP = ptrTP->next;
             }
+            cout << "\nNhap ten chu ma ban muon xoa: ";
 
-            cout << "\nHay nhap ten chu de ma ban muon xoa: ";
             while(1) {
                 cin.getline(nameTP, 50);
                 NodeTopic* ptrNodeTP = searchTopic(*listTopic, nameTP);
@@ -480,7 +488,6 @@ void deleteBookOrTopic(NodeTopic** listTopic) {
                     cout << "\nKhong tim thay chu de. Hay nhap lai ten chu de muon xoa: ";
                     continue;
                 }
-
                 if(ptrNodeTP == *listTopic) {
                     *listTopic = (*listTopic)->next;
                     delete ptrNodeTP;
@@ -489,7 +496,6 @@ void deleteBookOrTopic(NodeTopic** listTopic) {
                     display2(*listTopic);
                     return;
                 }
-
                 NodeTopic* prevNodeTP = *listTopic;
                 while(prevNodeTP != NULL && prevNodeTP->next != ptrNodeTP) {
                    prevNodeTP = prevNodeTP->next;
@@ -509,26 +515,24 @@ void deleteBookOrTopic(NodeTopic** listTopic) {
                 cout << "\nDanh sach chu de dang trong.";
                 return;
             }
-            cout << "\nBan muon xoa chu de nao?\n";
 
-            NodeTopic* ptrNodeTP1 = *listTopic;
-            int k = 1;
-            while(ptrNodeTP1 != NULL) {
-                cout << k <<". " << ptrNodeTP1->nameTopic << "\n";
-                k++;
-                ptrNodeTP1 = ptrNodeTP1->next;    
+            NodeTopic* ptrTP = *listTopic;
+
+            cout << "\nDanh sach chu de hien tai: \n";
+            while(ptrTP != NULL) {
+                cout << "- " << ptrTP->nameTopic << "\n";
+    
+                ptrTP = ptrTP->next;
             }
+            cout << "\nNhap ten chu ma ban muon xoa: ";
 
-            cout << "\nHay nhap ten chu de ma ban muon xoa: ";
             while(1){
                 cin.getline(nameTP, 50);
                 NodeTopic* ptrNodeTP = searchTopic(*listTopic, nameTP);
-
                 if(ptrNodeTP == NULL) {
                     cout << "\nKhong tim thay chu de. Hay nhap lai ten chu de muon xoa: ";
                     continue;
                 }
-
                 if(ptrNodeTP->listBook == NULL) {
                     cout << "\nChu de dang trong. Vui long them sach vao chu de de tiep tuc!";
                     return;
@@ -572,6 +576,7 @@ void deleteBookOrTopic(NodeTopic** listTopic) {
 }
 
 /*
+
 int main() {
     int i;
     NodeTopic* tp;
@@ -601,10 +606,11 @@ int main() {
             case 4:
                 deleteBookOrTopic(&tp);
                 break;
-            case 5:
+            default:
                 return 0;         
         }
         cout << " \n        ========================================================\n";
     }
-} 
-    */
+}
+    
+*/
