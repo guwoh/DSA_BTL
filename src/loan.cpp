@@ -7,183 +7,244 @@
 #include "../include/io.h"
 using namespace std;
 
-void createBorrowSlip(BorrowSlip*& head, Reader* readerList, NodeTopic* topicList) {
+void test_loan() {
+    cout << "loan.h is working" << endl;
+}
+
+// Tạo phiếu mượn mới
+BorrowSlip* createBorrowSlip() {
     BorrowSlip* newSlip = new BorrowSlip;
-    cout << "Nhập ID người đọc: ";
-    cin >> newSlip->readerID;
 
-    // Kiểm tra người đọc tồn tại
-    Reader* reader = readerList;
-    while (reader && strcmp(reader->id, newSlip->readerID) != 0)
-        reader = reader->next;
-    if (!reader) {
-        cout << "Không tìm thấy người đọc.\n";
-        delete newSlip;
-        return;
-    }
+    cout << "Nhap ma phieu muon: ";
+    cin.ignore();
+    cin.getline(newSlip->slipID, MAX_ID_LEN);
 
-    cout << "Nhập ngày mượn sách (dd/mm/yyyy): ";
-    cin >> newSlip->borrowDate;
-    strcpy(newSlip->returnDate, ""); // mặc định chưa trả
+    cout << "Nhap ID doc gia: ";
+    cin.getline(newSlip->readerID, MAX_ID_LEN);
 
-    cout << "Nhập số lượng sách mượn (<= " << MAX_BORROWED_BOOKS << "): ";
-    cin >> newSlip->numBorrowed;
+    cout << "Nhap ID sach: ";
+    cin.getline(newSlip->bookID, MAX_ID_LEN);
 
-    if (newSlip->numBorrowed > MAX_BORROWED_BOOKS || newSlip->numBorrowed <= 0) {
-        cout << "Số lượng sách không hợp lệ.\n";
-        delete newSlip;
-        return;
-    }
+    cout << "Nhap ngay muon (dd/mm/yyyy): ";
+    cin.getline(newSlip->borrowDate, MAX_DATE_LEN);
 
-    for (int i = 0; i < newSlip->numBorrowed; i++) {
-        cout << "Nhập ID sách: ";
-        cin >> newSlip->books[i].bookId;
-        cout << "Nhập số lượng sách: ";
-        cin >> newSlip->books[i].quantity;
-        newSlip->isReturned[i] = false;
+    cout << "Nhap han tra (dd/mm/yyyy): ";
+    cin.getline(newSlip->dueDate, MAX_DATE_LEN);
 
-        // Trừ số lượng sách (nếu có đủ)
-        NodeTopic* topic = topicList;
-        bool found = false;
-        while (topic && !found) {
-            NodeBook* b = topic->listBook;
-            while (b) {
-                if (strcmp(b->book.id, newSlip->books[i].bookId) == 0) {
-                    if (b->book.quantity >= newSlip->books[i].quantity) {
-                        b->book.quantity -= newSlip->books[i].quantity;
-                        found = true;
-                    } else {
-                        cout << "Not enough quantity for book ID: " << b->book.id << "\n";
-                        delete newSlip;
-                        return;
-                    }
-                }
-                b = b->next;
-            }
-            topic = topic->next;
+    newSlip->returnDate[0] = '\0'; // Chưa trả
+    newSlip->next = nullptr;
+
+    return newSlip;
+}
+
+// Thêm phiếu mượn
+void addBorrowSlip(BorrowSlip** head) {
+    BorrowSlip* newSlip = createBorrowSlip();
+
+    if (*head == nullptr) {
+        *head = newSlip;
+    } else {
+        BorrowSlip* current = *head;
+        while (current->next != nullptr) {
+            current = current->next;
         }
-        if (!found) {
-            cout << "Không tìm thấy sách.\n";
-            delete newSlip;
+        current->next = newSlip;
+    }
+
+    cout << "Them phieu muon thanh cong!" << endl;
+}
+
+// Trả sách (gán returnDate)
+void returnBook(BorrowSlip* head) {
+    char slipID[MAX_ID_LEN];
+    cout << "Nhap ma phieu muon can tra: ";
+    cin.ignore();
+    cin.getline(slipID, MAX_ID_LEN);
+
+    BorrowSlip* current = head;
+    while (current != nullptr) {
+        if (strcmp(current->slipID, slipID) == 0) {
+            if (strlen(current->returnDate) != 0) {
+                cout << "Sach da duoc tra truoc do!" << endl;
+                return;
+            }
+
+            cout << "Nhap ngay tra (dd/mm/yyyy): ";
+            cin.getline(current->returnDate, MAX_DATE_LEN);
+            cout << "Tra sach thanh cong!" << endl;
             return;
         }
+        current = current->next;
     }
 
-    newSlip->next = head;
-    head = newSlip;
-    cout << "Tạo phiếu mượn thành công!\n";
+    cout << "Khong tim thay phieu muon voi ma da nhap!" << endl;
 }
 
-void returnBook(BorrowSlip* head) {
-    char readerId[MAX_ID_LEN], bookId[20];
-    cout << "Nhập ID người đọc: ";
-    cin >> readerId;
-    cout << "Nhập ID sách cần trả: ";
-    cin >> bookId;
+// Xóa phiếu mượn
+void deleteBorrowSlip(BorrowSlip** head) {
+    char slipID[MAX_ID_LEN];
+    cout << "Nhap ma phieu muon can xoa: ";
+    cin.ignore();
+    cin.getline(slipID, MAX_ID_LEN);
 
-    BorrowSlip* slip = head;
-    while (slip) {
-        if (strcmp(slip->readerID, readerId) == 0) {
-            for (int i = 0; i < slip->numBorrowed; i++) {
-                if (strcmp(slip->books[i].bookId, bookId) == 0 && !slip->isReturned[i]) {
-                    slip->isReturned[i] = true;
+    BorrowSlip* current = *head;
+    BorrowSlip* prev = nullptr;
 
-                    // Nhập ngày trả
-                    cout << "Nhập ngày trả sách (dd/mm/yyyy): ";
-                    cin >> slip->returnDate;
-
-                    cout << "Sách đã trả.\n";
-                    return;
-                }
+    while (current != nullptr) {
+        if (strcmp(current->slipID, slipID) == 0) {
+            if (prev == nullptr) {
+                *head = current->next;
+            } else {
+                prev->next = current->next;
             }
+            delete current;
+            cout << "Xoa phieu muon thanh cong!" << endl;
+            return;
         }
-        slip = slip->next;
+        prev = current;
+        current = current->next;
     }
-    cout << "Borrow record not found or already returned.\n";
+
+    cout << "Khong tim thay phieu muon voi ma da nhap!" << endl;
 }
 
+// Liệt kê phiếu mượn
 void listBorrowSlips(BorrowSlip* head) {
-    BorrowSlip* slip = head;
-    while (slip) {
-        cout << "ID người đọc: " << slip->readerID << "\n";
-        cout << "Ngày mượn sách: " << slip->borrowDate << "\n";
-        cout << "Ngày trả sách: " << (strlen(slip->returnDate) > 0 ? slip->returnDate : "Chưa trả sách") << "\n";
+    if (head == nullptr) {
+        cout << "Khong co phieu muon nao!" << endl;
+        return;
+    }
 
-        for (int i = 0; i < slip->numBorrowed; i++) {
-            cout << "- ID sách: " << slip->books[i].bookId
-                 << ", Số lượng: " << slip->books[i].quantity
-                 << ", Đã trả: " << (slip->isReturned[i] ? "Có" : "Không") << "\n";
+    cout << "Danh sach phieu muon:" << endl;
+    BorrowSlip* current = head;
+    while (current != nullptr) {
+        cout << "Phieu: " << current->slipID
+             << ", Doc gia: " << current->readerID
+             << ", Sach: " << current->bookID
+             << ", Ngay muon: " << current->borrowDate
+             << ", Han tra: " << current->dueDate
+             << ", Ngay tra: " << (strlen(current->returnDate) > 0 ? current->returnDate : "Chua tra") << endl;
+        current = current->next;
+    }
+}
+
+// Tìm kiếm theo ID người mượn
+void searchSlipByReader(BorrowSlip* head) {
+    char readerID[MAX_ID_LEN];
+    cout << "Nhap ID doc gia can tim: ";
+    cin.ignore();
+    cin.getline(readerID, MAX_ID_LEN);
+
+    bool found = false;
+    BorrowSlip* current = head;
+    while (current != nullptr) {
+        if (strcmp(current->readerID, readerID) == 0) {
+            cout << "Phieu: " << current->slipID
+                 << ", Sach: " << current->bookID
+                 << ", Ngay muon: " << current->borrowDate
+                 << ", Han tra: " << current->dueDate
+                 << ", Ngay tra: " << (strlen(current->returnDate) > 0 ? current->returnDate : "Chua tra") << endl;
+            found = true;
         }
-        cout << "--------------------------\n";
-        slip = slip->next;
+        current = current->next;
+    }
+
+    if (!found) {
+        cout << "Khong co phieu muon nao cho doc gia nay!" << endl;
     }
 }
+// Liệt kê sách chưa trả
+void listUnreturnedBooks(BorrowSlip* head) {
+    if (head == nullptr) {
+        cout << "Khong co phieu muon nao!" << endl;
+        return;
+    }
 
-void listUnreturnedBooks(BorrowSlip* head, const char* readerId) {
-    BorrowSlip* slip = head;
-    while (slip) {
-        if (strcmp(slip->readerID, readerId) == 0) {
-            for (int i = 0; i < slip->numBorrowed; i++) {
-                if (!slip->isReturned[i]) {
-                    cout << "ID sách: " << slip->books[i].bookId
-                         << ", Số lượng: " << slip->books[i].quantity
-                         << ", Ngày mượn sách: " << slip->borrowDate << "\n";
-                }
-            }
+    cout << "Danh sach sach chua tra:" << endl;
+    BorrowSlip* current = head;
+    while (current != nullptr) {
+        if (strlen(current->returnDate) == 0) {
+            cout << "Phieu: " << current->slipID
+                 << ", Doc gia: " << current->readerID
+                 << ", Sach: " << current->bookID
+                 << ", Ngay muon: " << current->borrowDate
+                 << ", Han tra: " << current->dueDate << endl;
         }
-        slip = slip->next;
+        current = current->next;
     }
 }
+// Kiểm tra điều kiện mượn sách
+void checkBorrowConditions(BorrowSlip* head) {
+    if (head == nullptr) {
+        cout << "Khong co phieu muon nao!" << endl;
+        return;
+    }
 
-void checkBorrowStatus(BorrowSlip* head, const char* readerId, int* result) {
-    int totalUnreturned = 0;
-    BorrowSlip* slip = head;
-
-    while (slip) {
-        if (strcmp(slip->readerID, readerId) == 0) {
-            for (int i = 0; i < slip->numBorrowed; i++) {
-                if (!slip->isReturned[i]) {
-                    totalUnreturned += slip->books[i].quantity;
-                }
-            }
+    BorrowSlip* current = head;
+    while (current != nullptr) {
+        if (strlen(current->returnDate) == 0) {
+            cout << "Phieu: " << current->slipID
+                 << ", Doc gia: " << current->readerID
+                 << ", Sach: " << current->bookID
+                 << ", Ngay muon: " << current->borrowDate
+                 << ", Han tra: " << current->dueDate
+                 << " - Chua tra sach!" << endl;
         }
-        slip = slip->next;
-    }
-
-    if (totalUnreturned >= MAX_BORROWED_BOOKS) {
-        cout << "Mượn quá số lượng quy định. Không thể mượn thêm.\n";
-        *result = 0; // Không đủ điều kiện
-    } else {
-        *result = 1; // Đủ điều kiện
+        current = current->next;
     }
 }
-/*void test_loan() {
-    // Test functions here
-    BorrowSlip* borrowList = nullptr;
-    Reader* readerList = nullptr; // Giả sử đã có danh sách người đọc
-    NodeTopic* topicList = nullptr; // Giả sử đã có danh sách chủ đề sách
+/*
+// Hàm kiểm thử
+void test_loan() {
+    BorrowSlip* head = nullptr;
+    int choice;
 
-    // Tạo phiếu mượn
-    createBorrowSlip(borrowList, readerList, topicList);
+    do {
+        cout << "\n1. Them phieu muon";
+        cout << "\n2. Tra sach";
+        cout << "\n3. Xoa phieu muon";
+        cout << "\n4. Liet ke phieu muon";
+        cout << "\n5. Tim phieu theo ID doc gia";
+        cout << "\n6. Liet ke sach chua tra";
+        cout << "\n7. Kiem tra dieu kien muon sach";
+        cout << "\n0. Thoat";
+        cout << "\nChon: ";
+        cin >> choice;
 
-    // Liệt kê phiếu mượn
-    listBorrowSlips(borrowList);
+        switch (choice) {
+            case 1:
+                addBorrowSlip(&head);
+                break;
+            case 2:
+                returnBook(head);
+                break;
+            case 3:
+                deleteBorrowSlip(&head);
+                break;
+            case 4:
+                listBorrowSlips(head);
+                break;
+            case 5:
+                searchSlipByReader(head);
+                break;
+            case 6:
+                listUnreturnedBooks(head);
+                break;
+            case 7:
+                checkBorrowConditions(head);
+                break;
+            case 0:
+                cout << "Thoat!" << endl;
+                break;
+            default:
+                cout << "Lua chon khong hop le!" << endl;
+        }
+    } while (choice != 0);
 
-    // Trả sách
-    returnBook(borrowList);
-
-    // Liệt kê sách chưa trả của một người đọc
-    char readerId[MAX_ID_LEN];
-    cout << "Enter reader ID to list unreturned books: ";
-    cin >> readerId;
-    listUnreturnedBooks(borrowList, readerId);
-
-    // Kiểm tra tình trạng mượn sách
-    int result;
-    checkBorrowStatus(borrowList, readerId, &result);
-}
-int main() {
-    // Gọi hàm kiểm thử
-    test_loan();
-    return 0;
+    // Giải phóng bộ nhớ
+    while (head != nullptr) {
+        BorrowSlip* temp = head;
+        head = head->next;
+        delete temp;
+    }
 }*/
