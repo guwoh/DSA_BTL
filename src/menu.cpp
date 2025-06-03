@@ -128,7 +128,7 @@ void choiceLoan(BorrowSlip** borrowList) {
         
         switch (choice) {
             case 1:
-                createBorrowSlip(borrowList);
+                //createBorrowSlip(borrowList);
                 break;
             case 2:
                 returnBook(*borrowList);
