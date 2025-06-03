@@ -110,15 +110,16 @@ void choiceMember(Reader** head) {
 // MENU phần Loan
 void menuLoan() {
     printf("----- MENU QUAN LY MUON/TRA SACH -----\n");
-    printf("1. Tao phieu muon sach\n");
+    printf("1. Them phieu muon sach\n");
     printf("2. Tra sach\n");
-    printf("3. Hien thi danh sach phieu muon\n");
-    printf("4. Hien thi danh sach chua tra\n");
-    printf("5. Kiem tra dieu kien muon\n");
+    printf("3. Xoa phieu muon\n");
+    printf("4. Hien thi danh sach phieu muon\n");
+    printf("5. Hien thi danh sach chua tra\n");
+    printf("6. Kiem tra dieu kien muon\n");
     printf("0. Quay lai menu chinh\n");
 }
 
-void choiceLoan(BorrowSlip** borrowList) {
+void choiceLoan(BorrowSlip* borrowList, Reader* readerList, NodeTopic* topicList) {
     int choice;
     do {
         menuLoan();
@@ -128,19 +129,22 @@ void choiceLoan(BorrowSlip** borrowList) {
         
         switch (choice) {
             case 1:
-                //createBorrowSlip(borrowList);
+                addBorrowSlip(&borrowList, readerList, topicList);
                 break;
             case 2:
-                returnBook(*borrowList);
+                returnBook(borrowList);
                 break;
             case 3:
-                listBorrowSlips(*borrowList);
+                deleteBorrowSlip(&borrowList);
                 break;
             case 4:
-                listUnreturnedBooks(*borrowList);
+                listBorrowSlips(borrowList);
                 break;
             case 5:
-                checkBorrowConditions(*borrowList);
+                listUnreturnedBooks(borrowList);
+                break;
+            case 6:
+                checkBorrowConditions(borrowList);
                 break;
             case 0:
                 printf("Quay lai menu chinh...\n");
