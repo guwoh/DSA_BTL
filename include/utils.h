@@ -16,16 +16,16 @@ void test_utlis();
 
 // HÀM liên quan đến thống kê
 // Top 3 sách được mượn nhiều nhất
-int countBookBorrowed();
-void updateTop3Books();
-void findTop3Books();
+int countBookBorrowed(BorrowSlip* slipList, const char* bookID);
+void updateTop3Books(TopBook top3[], Book* book, int count);
+void findTop3Books(NodeTopic* topicList, BorrowSlip* slipList);
 
 // Top 3 độc giả mượn nhiều sách nhất
-int countBorrowedBooks(); // Hàm đếm số sách mượn của độc giả
-void updateTop3(); // Cập nhật top 3 độc giả mượn sách
-void findTop3Readers(); // Tìm kiếm top 3 độc giả mượn sách nhiều nhất
+int countBorrowedBooks(BorrowSlip* slipList, const char* readerID); // Hàm đếm số sách mượn của độc giả
+void updateTop3(TopReader top3[], Reader* reader, int count); // Cập nhật top 3 độc giả mượn sách
+void findTop3Readers(Reader* readerList, BorrowSlip* slipList); // Tìm kiếm top 3 độc giả mượn sách nhiều nhất
 
 // Tổng số sách đang mượn 
-void hienThiBorrowedBooks(); 
+void hienThiBorrowedBooks(BorrowSlip* head); 
 
 #endif

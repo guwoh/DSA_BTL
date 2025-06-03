@@ -16,14 +16,13 @@ void choiceBook(NodeTopic* tp);
 
 // Phần Member
 void menuMember();
-void choiceMember();
+void choiceMember(Reader** head);
 
 // Phần Loan
 void menuLoan();
-void choiceLoan();
+void choiceLoan(BorrowSlip** borrowList);
 
 // Phần thống kê
 void menuThongKe(); // Menu thống kê
-void choiceThongKe(); // Lựa chọn thống kê
-
+void choiceThongKe(NodeTopic* topicList, BorrowSlip* slipList, Reader* readerList);
 #endif

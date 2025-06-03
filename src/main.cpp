@@ -28,21 +28,50 @@ int main() {
 
         printf("\nNhap lua chon cua ban: ");
         scanf("%d", &luaChon);
-
+        while (getchar() != '\n'); // Xóa bộ đệm nhập
+        printf("\n-----------------------------------------\n");
         switch (luaChon) {
             case 1:
-                NodeTopic* tp;
-                initTopic(&tp); // Khởi tạo danh sách chủ đề sách
-                choiceBook(tp);
+                NodeTopic* topicList = NULL;
+                initTopic(&topicList); // Khởi tạo danh sách chủ đề sách
+                choiceBook(topicList);
+                // Giải phóng bộ nhớ
+                NodeTopic* currentTopic = topicList;
+                while (currentTopic != NULL) {
+                    NodeTopic* tempTopic = currentTopic;
+                    currentTopic = currentTopic->next;
+
+                    NodeBook* currentBook = tempTopic->listBook;
+                    while (currentBook != NULL) {
+                        NodeBook* tempBook = currentBook;
+                        currentBook = currentBook->next;
+                        delete tempBook;
+                    }
+                    delete tempTopic;
+                }
+                topicList = NULL;
                 break;
             case 2:
-                choiceMember();
+                Reader* readerList = NULL;
+                choiceMember(&readerList);
+                // Giải phóng bộ nhớ
+                while (readerList) {
+                    Reader* temp = readerList;
+                    readerList = readerList->next;
+                    free(temp);
+                }
                 break;
             case 3:
-                choiceLoan();
+                BorrowSlip* borrowList = NULL;
+                choiceLoan(&borrowList);
+                while (borrowList) {
+                    BorrowSlip* temp = borrowList;
+                    borrowList = borrowList->next;
+                    free(temp);
+                }   
                 break;
             case 4:
-                choiceThongKe();
+                choiceThongKe(topicList, borrowList, readerList);
                 break;
             case 0:
                 printf("Thoat chuong trinh.\n");
