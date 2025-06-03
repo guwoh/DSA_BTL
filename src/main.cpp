@@ -26,27 +26,29 @@ int main() {
     do {
         void hienThiMenuChinh();
 
-        printf("\nNhập lựa chọn của bạn: ");
+        printf("\nNhap lua chon cua ban: ");
         scanf("%d", &luaChon);
 
         switch (luaChon) {
             case 1:
-                void choiceBook();
+                NodeTopic* tp;
+                initTopic(&tp); // Khởi tạo danh sách chủ đề sách
+                choiceBook(tp);
                 break;
             case 2:
-                void choiceMember();
+                choiceMember();
                 break;
             case 3:
-                void choiceLoan();
+                choiceLoan();
                 break;
             case 4:
-                void choiceThongKe();
+                choiceThongKe();
                 break;
             case 0:
-                printf("Thoát chương trình.\n");
+                printf("Thoat chuong trinh.\n");
                 break;
             default:
-                printf("Lựa chọn không hợp lệ. Vui lòng thử lại.\n");
+                printf("Lua chon khong hop le. Vui long thu lai.\n");
         }
 
         printf("\n-----------------------------------------\n");
