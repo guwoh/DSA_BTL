@@ -20,7 +20,7 @@ void choiceMember(Reader** head);
 
 // Phần Loan
 void menuLoan();
-void choiceLoan(BorrowSlip** borrowList);
+void choiceLoan(BorrowSlip* borrowList, Reader* readerList, NodeTopic* topicList);
 
 // Phần thống kê
 void menuThongKe(); // Menu thống kê
