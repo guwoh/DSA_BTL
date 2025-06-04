@@ -28,7 +28,7 @@ void menuBook() {
     printf("0. Quay lai menu chinh\n");
 }
 
-void choiceBook(NodeTopic* tp) {
+void choiceBook(NodeTopic** tp) {
     int choice;
     do {
         menuBook();
@@ -37,17 +37,17 @@ void choiceBook(NodeTopic* tp) {
         while (getchar() != '\n'); // Xóa bộ đệm nhập
         switch (choice) {
             case 1:
-                addNew(&tp);
-                display2(tp);
+                addNew(tp);
+                display2(*tp);
                 break;
             case 2:
-                editBook(&tp);
+                editBook(tp);
                 break;
             case 3:
-                searchByID1(&tp);
+                searchByID1(tp);
                 break;
             case 4:
-                deleteBookOrTopic(&tp);
+                deleteBookOrTopic(tp);
                 break;
             case 0:
                 printf("Quay lại menu chính...\n");

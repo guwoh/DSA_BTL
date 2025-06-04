@@ -12,7 +12,7 @@ void hienThiMenuChinh();
 
 // Phần Book
 void menuBook();
-void choiceBook(NodeTopic* tp);
+void choiceBook(NodeTopic** tp);
 
 // Phần Member
 void menuMember();
