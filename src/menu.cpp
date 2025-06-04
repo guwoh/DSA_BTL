@@ -21,10 +21,11 @@ void hienThiMenuChinh() {
 // MENU phần Book
 void menuBook() {
     printf("----- MENU QUAN LY SACH -----\n");
-    printf("1. Them chu de va sach\n");
-    printf("2. Sua thong tin sach\n");
-    printf("3. Tim kiem sach\n");
-    printf("4. Xoa chu de hoac sach\n");
+    printf("1. Hien thi chu de va sach co san\n");
+    printf("2. Them chu de va sach\n");
+    printf("3. Sua thong tin sach\n");
+    printf("4. Tim kiem sach\n");
+    printf("5. Xoa chu de hoac sach\n");
     printf("0. Quay lai menu chinh\n");
 }
 
@@ -37,16 +38,19 @@ void choiceBook(NodeTopic** tp) {
         while (getchar() != '\n'); // Xóa bộ đệm nhập
         switch (choice) {
             case 1:
-                addNew(tp);
                 display2(*tp);
                 break;
             case 2:
-                editBook(tp);
+                addNew(tp);
+                display2(*tp);
                 break;
             case 3:
-                searchByID1(tp);
+                editBook(tp);
                 break;
             case 4:
+                searchByID1(tp);
+                break;
+            case 5:
                 deleteBookOrTopic(tp);
                 break;
             case 0:
