@@ -50,10 +50,10 @@ void choiceBook(NodeTopic** tp) {
                 deleteBookOrTopic(tp);
                 break;
             case 0:
-                printf("Quay lại menu chính...\n");
+                printf("Quay lai menu chinh...\n");
                 break;
             default:
-                printf("Lựa chọn không hợp lệ, vui lòng thử lại.\n");
+                printf("Lua chon khong hop le. Vui long thu lai.\n");
         }
         printf("\n");
     } while (choice != 0);
@@ -68,14 +68,14 @@ void menuMember() {
     printf("4. Tim kiem nguoi doc theo ID\n");
     printf("5. Tim kiem nguoi doc theo ten\n");
     printf("6. Hien thi danh sach nguoi doc\n");
-    printf("0. Quay lại menu chính\n");
+    printf("0. Quay lai menu chinh\n");
 }
 
 void choiceMember(Reader** head) {
     int choice;
     do {
         menuMember();
-        printf("Chọn chức năng quản lý độc giả: ");
+        printf("Chon chuc nang quan ly doc gia: ");
         scanf("%d", &choice);
         while (getchar() != '\n'); // Xóa bộ đệm nhập
         switch (choice) {
@@ -98,10 +98,10 @@ void choiceMember(Reader** head) {
                 listReaders(*head);
                 break;
             case 0:
-                printf("Quay lại menu chính...\n");
+                printf("Quay lai menu chinh...\n");
                 break;
             default:
-                printf("Lựa chọn không hợp lệ, vui lòng thử lại.\n");
+                printf("Lua chon khong hop le. Vui long thu lai.\n");
         }
         printf("\n");
     } while (choice != 0);

@@ -1,3 +1,6 @@
+Topic: Toan hoc muon mau
+THMM;Toan cho be yeu;A;2025;20
+END_TOPIC
 Topic: Van hoc
 B001;Truyen Kieu;Nguyen Du;1820;5
 B002;Luc Van Tien;Nguyen Dinh Chieu;1850;3
