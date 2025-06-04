@@ -1,0 +1,1 @@
+this function use for store the data of file.bin
