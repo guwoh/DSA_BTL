@@ -1,15 +1,3 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<string.h>
-
-#include "../include/book.h"
-#include "../include/loan.h"
-#include "../include/member.h"
-#include "../include/io.h"
-
-// main code below
-
-// book
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -19,12 +7,12 @@
 #include "../include/member.h"
 #include "../include/io.h"
 
-#define MAX_TOPIC 100
+#define MAX_TOPIC 200
 
-const char* TEXT_FILE_BOOK = "doc/outPut/txt/book.txt";
-const char* BIN_FILE_BOOK = "doc/outPut/bin/book.bin";
-const char* TEXT_FILE_READER = "doc/outPut/txt/reader.txt";
-const char* BIN_FILE_READER = "doc/outPut/bin/reader.bin";
+// const char* TEXT_FILE_BOOK = "doc/outPut/txt/book.txt";
+// const char* BIN_FILE_BOOK = "doc/outPut/bin/book.bin";
+// const char* TEXT_FILE_READER = "doc/outPut/txt/reader.txt";
+// const char* BIN_FILE_READER = "doc/outPut/bin/reader.bin";
 
 // =============================
 // GHI DỮ LIỆU DẠNG TEXT
@@ -32,11 +20,10 @@ const char* BIN_FILE_READER = "doc/outPut/bin/reader.bin";
 void bookWriteText(NodeTopic* head, const char* fileName)
 {
     char fullPath[100];
-    sprintf(fullPath, "doc/outPut/txt/%s", fileName);  // Nối đường dẫn + tên file
+    sprintf(fullPath, "../doc/outPut/txt/%s", fileName);  // Nối đường dẫn + tên file
 
     FILE* fp = fopen(fullPath, "w");
     if (!fp) {
-        perror("Error opening text file");
         return;
     }
 
@@ -63,11 +50,10 @@ void bookWriteText(NodeTopic* head, const char* fileName)
 void bookWriteBin(NodeTopic* head, const char* fileName)
 {
     char fullPath[100];
-    sprintf(fullPath, "doc/outPut/bin/%s", fileName);
+    sprintf(fullPath, "../doc/outPut/bin/%s", fileName);
 
     FILE* fp = fopen(fullPath, "wb");
     if (!fp) {
-        perror("Error opening binary file");
         return;
     }
 
@@ -106,11 +92,10 @@ void bookWriteBin(NodeTopic* head, const char* fileName)
 void bookReadBin(NodeTopic** head, const char* fileName)
 {
     char fullPath[100];
-    sprintf(fullPath, "doc/outPut/bin/%s", fileName);
+    sprintf(fullPath, "../doc/outPut/bin/%s", fileName);
 
     FILE* fp = fopen(fullPath, "rb");
     if (!fp) {
-        perror("Error reading binary file");
         return;
     }
 
@@ -164,11 +149,11 @@ void bookReadBin(NodeTopic** head, const char* fileName)
 // =============================
 void readerWriteText(Reader* head, const char* fileName) {
     char fullPath[256];
-    snprintf(fullPath, sizeof(fullPath), "doc/outPut/txt/%s", fileName);
+    snprintf(fullPath, sizeof(fullPath), "../doc/outPut/txt/%s", fileName);
 
     FILE* fp = fopen(fullPath, "w");
-    if (!fp) {
-        perror("Không thể mở file để ghi văn bản");
+    if (!fp) 
+    {
         return;
     }
 
@@ -181,7 +166,7 @@ void readerWriteText(Reader* head, const char* fileName) {
     }
 
     fclose(fp);
-    printf("Đã lưu người đọc vào file text thành công: %s\n", fullPath);
+    printf("Da luu danh sach nguoi doc vao file text thanh cong %s\n", fullPath);
 }
 
 // =============================
@@ -189,11 +174,10 @@ void readerWriteText(Reader* head, const char* fileName) {
 // =============================
 void readerWriteBin(Reader* head, const char* fileName) {
     char fullPath[256];
-    snprintf(fullPath, sizeof(fullPath), "doc/outPut/bin/%s", fileName);
+    snprintf(fullPath, sizeof(fullPath), "../doc/outPut/bin/%s", fileName);
 
     FILE* fp = fopen(fullPath, "wb");
     if (!fp) {
-        perror("Không thể mở file để ghi nhị phân");
         return;
     }
 
@@ -204,16 +188,15 @@ void readerWriteBin(Reader* head, const char* fileName) {
     }
 
     fclose(fp);
-    printf("Đã lưu người đọc vào file binary thành công: %s\n", fullPath);
+    printf("Da luu nguoi doc vao file bin thanh cong %s\n", fullPath);
 }
 
 void readerReadBin(Reader*& head, const char* fileName) { // truyền tham chiếu giống C++
     char fullPath[256];
-    snprintf(fullPath, sizeof(fullPath), "doc/outPut/bin/%s", fileName);
+    snprintf(fullPath, sizeof(fullPath), "../doc/outPut/bin/%s", fileName);
 
     FILE* fp = fopen(fullPath, "rb");
     if (!fp) {
-        perror("Không thể mở file để đọc nhị phân");
         return;
     }
 
@@ -221,7 +204,7 @@ void readerReadBin(Reader*& head, const char* fileName) { // truyền tham chi�
     while (fread(&temp, sizeof(Reader), 1, fp)) {
         Reader* newReader = (Reader*)malloc(sizeof(Reader));
         if (!newReader) {
-            printf("Lỗi cấp phát bộ nhớ khi đọc.\n");
+            printf("Loi cap phat bo nho khi doc.\n");
             fclose(fp);
             return;
         }
@@ -238,5 +221,5 @@ void readerReadBin(Reader*& head, const char* fileName) { // truyền tham chi�
     }
 
     fclose(fp);
-    printf("Đã đọc người đọc từ file binary thành công: %s\n", fullPath);
+    printf("Data loaded from %s (binary)\n", fullPath);
 }
