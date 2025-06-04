@@ -8,7 +8,7 @@
 // hiep is here
 
 int main() {
-    NodeTopic* topicList = NULL;
+    NodeTopic* topicList;
     initTopic(&topicList); // Khởi tạo danh sách chủ đề sách
     Reader* readerList = NULL;
     BorrowSlip* borrowList = NULL;
@@ -23,7 +23,7 @@ int main() {
         printf("\n-----------------------------------------\n");
         switch (luaChon) {
             case 1:
-                choiceBook(topicList);
+                choiceBook(&topicList);
                 break;
             case 2:
                 choiceMember(&readerList);
