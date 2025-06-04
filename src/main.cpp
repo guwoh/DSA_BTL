@@ -15,7 +15,7 @@ int main() {
     int luaChon;
 
     do {
-        void hienThiMenuChinh();
+        hienThiMenuChinh();
 
         printf("\nNhap lua chon cua ban: ");
         scanf("%d", &luaChon);

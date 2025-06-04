@@ -6,6 +6,7 @@
 #include "../include/member.h"
 #include "../include/utils.h"
 #include "../include/io.h"
+#include "../include/menu.h"
 using namespace std;
 
 void test_member() {
