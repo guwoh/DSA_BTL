@@ -3,6 +3,7 @@
 #include "../include/member.h"
 #include "../include/utils.h"
 #include "../include/io.h"
+#include "../include/menu.h"
 #include<iostream>
 #include<stdio.h>
 #include<string.h>
