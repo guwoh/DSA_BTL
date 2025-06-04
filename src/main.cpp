@@ -40,6 +40,7 @@ int main() {
     if(topicList == NULL) printf("Khong co du lieu ve thong ke!\n");
     else if(topicList == NULL) printf("Cap nhat du lieu ve thong ke thanh cong!\n");
     
+    printf("\n");
     do {
         hienThiMenuChinh();
 
@@ -61,13 +62,13 @@ int main() {
                 choiceThongKe(topicList, borrowList, readerList);
                 break;
             case 0:
-                printf("Thoat chuong trinh.\n");
+                // printf("Thoat chuong trinh.\n");
                 break;
             default:
                 printf("Lua chon khong hop le. Vui long thu lai.\n");
         }
 
-        printf("\n-----------------------------------------\n");
+        
 
     } while (luaChon != 0);
     
@@ -81,7 +82,8 @@ int main() {
     readerWriteText(readerList, "reader.txt");
     readerWriteBin(readerList, "reader.bin");
     
-    
+    printf("\n          THOAT CHUONG TRINH!");
+    printf("\n-----------------------------------------\n");
     return 0;
 }
 
