@@ -154,7 +154,7 @@ void addNew(NodeTopic** listTopic) {
     
                 ptrTP = ptrTP->next;
             }
-            cout << "\nNhap ten chu ma ban muon them sach vao: ";
+            cout << "\nNhap ten chu de ma ban muon them sach vao: ";
 
             cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             while(1) {
