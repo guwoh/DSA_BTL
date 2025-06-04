@@ -12,12 +12,6 @@ void bookWriteBin(); // write bin file for machine
 void bookReadBin(); // machine read bin flie to recovery data of linked list Topic Book
 
 
-// test vim
-
-
-
-
-
 
 // member.h
 // all this function below use for reader
