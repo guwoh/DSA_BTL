@@ -30,8 +30,6 @@ bool readerExists(const char* readerID, Reader* readerList);
 bool bookExists(const char* bookID, NodeTopic* topicList);
 void searchSlipByReader(BorrowSlip* head);
 
-// Hàm kiểm thử
-void test_loan();
 
 #endif
 

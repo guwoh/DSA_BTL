@@ -14,6 +14,9 @@
 // const char* TEXT_FILE_READER = "doc/outPut/txt/reader.txt";
 // const char* BIN_FILE_READER = "doc/outPut/bin/reader.bin";
 
+
+// data book****************************************************    
+
 // =============================
 // GHI DỮ LIỆU DẠNG TEXT
 // =============================
@@ -41,7 +44,7 @@ void bookWriteText(NodeTopic* head, const char* fileName)
     }
 
     fclose(fp);
-    printf("Data saved to %s (text)\n", fullPath);
+    printf("Da luu danh sach vao file text thanh cong %s\n", fullPath);
 }
 
 // =============================
@@ -70,7 +73,7 @@ void bookWriteBin(NodeTopic* head, const char* fileName)
             tempBook = tempBook->next;
         }
 
-        fwrite(&bookCount, sizeof(int), 1, fp);
+        fwrite(&bookCount, sizeof(int), 1, fp); // ghi số sách vào bin
 
         // Ghi thông tin từng sách
         tempBook = topic->listBook;
@@ -83,7 +86,7 @@ void bookWriteBin(NodeTopic* head, const char* fileName)
     }
 
     fclose(fp);
-    printf("Data saved to %s (binary)\n", fullPath);
+    printf("Da luu danh sach vao file bin thanh cong %s\n", fullPath);
 }
 
 // =============================
@@ -140,9 +143,10 @@ void bookReadBin(NodeTopic** head, const char* fileName)
     }
 
     fclose(fp);
-    printf("Data loaded from %s (binary)\n", fullPath);
+    printf("Da doc du lieu ve sach thanh cong %s\n", fullPath);
 }
 
+// data reader*****************************************************
 
 // =============================
 // READER - TEXT
@@ -184,11 +188,12 @@ void readerWriteBin(Reader* head, const char* fileName) {
     Reader* current = head;
     while (current != NULL) {
         fwrite(current, sizeof(Reader), 1, fp);
+        //size_t fwrite(const void *ptr, size_t size, size_t count, FILE *stream);
         current = current->next;
     }
 
     fclose(fp);
-    printf("Da luu nguoi doc vao file bin thanh cong %s\n", fullPath);
+    printf("Da luu danh sach nguoi doc vao file bin thanh cong %s\n", fullPath);
 }
 
 void readerReadBin(Reader*& head, const char* fileName) { // truyền tham chiếu giống C++
@@ -221,5 +226,152 @@ void readerReadBin(Reader*& head, const char* fileName) { // truyền tham chi�
     }
 
     fclose(fp);
-    printf("Data loaded from %s (binary)\n", fullPath);
+    printf("Da doc du lieu nguoi doc thanh cong %s\n", fullPath);
 }
+
+// data borrow slip*****************************************************
+
+// =============================
+// GHI DỮ LIỆU DẠNG TEXT
+// =============================
+void borrowSlipWriteText(BorrowSlip* head, const char* fileName) {
+    char fullPath[100];
+    snprintf(fullPath, sizeof(fullPath), "../doc/outPut/txt/%s", fileName);
+
+    FILE* fp = fopen(fullPath, "w");
+    if (!fp) {
+        return;
+    }
+
+    BorrowSlip* current = head; // khai bao con tro current
+    while (current != NULL) {
+        fprintf(fp, "%s;%s;%s;%s;%s;%s\n",
+                current->slipID, current->bookID, current->readerID,
+                current->borrowDate, current->dueDate, current->returnDate);
+        current = current->next;
+    }
+
+    fclose(fp);
+    printf("Da luu danh sach phieu muon vao file text thanh cong %s\n", fullPath);
+}
+// =============================
+// GHI DỮ LIỆU DẠNG BIN
+// =============================
+void borrowSlipWriteBin(BorrowSlip* head, const char* fileName)
+{
+    char fullPath[100];
+    snprintf(fullPath, sizeof(fullPath), "../doc/outPut/bin/%s", fileName);
+
+    FILE* fp = fopen(fullPath, "wb");
+    if (!fp) {
+        return;
+    }   
+
+    BorrowSlip* current = head; // khai bao con tro current
+    while (current != NULL) {
+        fwrite(current, sizeof(BorrowSlip), 1, fp);
+        current = current->next;
+    }
+
+    fclose(fp);
+    printf("Da luu danh sach phieu muon vao file bin thanh cong %s\n", fullPath);
+}
+// =============================
+// ĐỌC DỮ LIỆU DẠNG BIN
+// =============================
+void borrowSlipReadBin(BorrowSlip** head, const char* fileName) 
+{
+    char fullPath[100];
+    snprintf(fullPath, sizeof(fullPath), "../doc/outPut/bin/%s", fileName);
+
+    FILE* fp = fopen(fullPath, "rb");
+    if (!fp) return;
+
+    BorrowSlip temp;
+    BorrowSlip** current = head;  // current trỏ đến head ban đầu
+
+    while (fread(&temp, sizeof(BorrowSlip), 1, fp)) {
+        BorrowSlip* newNode = (BorrowSlip*)malloc(sizeof(BorrowSlip));
+        if (!newNode) {
+            printf("Loi cap phat bo nho.\n");
+            fclose(fp);
+            return;
+        }
+        *newNode = temp;
+        newNode->next = NULL;
+
+        *current = newNode;            // Gán node mới vào vị trí current đang trỏ đến
+        current = &((*current)->next); // Di chuyển current đến next của node mới
+    }
+    
+    fclose(fp);
+    printf("Da doc du lieu phieu muon thanh cong %s\n", fullPath);
+}
+
+// data top reader*****************************************************
+
+// attention: chỉ là struct bình thường
+
+// =============================
+// GHI DỮ LIỆU DẠNG TEXT
+// =============================
+void topReaderWriteText(TopReader* head, const char* fileName) {
+    char fullPath[100];
+    snprintf(fullPath, sizeof(fullPath), "../doc/outPut/txt/%s", fileName);
+
+
+}
+
+
+// =============================
+// GHI DỮ LIỆU DẠNG BIN
+// =============================
+void topReaderWriteBin(TopReader* head, const char* fileName) {
+    char fullPath[100];
+    snprintf(fullPath, sizeof(fullPath), "../doc/outPut/bin/%s", fileName);
+    
+    
+}
+
+// =============================
+// ĐỌC DỮ LIỆU DẠNG BIN
+// =============================
+void topReaderReadBin(TopReader*& head, const char* fileName) {
+    char fullPath[100];
+    snprintf(fullPath, sizeof(fullPath), "../doc/outPut/bin/%s", fileName);
+    
+    
+}
+
+// data top book*****************************************************
+
+
+// =============================
+// GHI DỮ LIỆU DẠNG TEXT
+// =============================
+void topBookWriteText(TopBook* head, const char* fileName) {
+    char fullPath[100];
+    snprintf(fullPath, sizeof(fullPath), "../doc/outPut/txt/%s", fileName);
+    
+    
+}
+
+// =============================
+// GHI DỮ LIỆU DẠNG BIN
+// =============================
+void topBookWriteBin(TopBook* head, const char* fileName) {
+    char fullPath[100];
+    snprintf(fullPath, sizeof(fullPath), "../doc/outPut/bin/%s", fileName);
+    
+    
+}
+
+// =============================
+// ĐỌC DỮ LIỆU DẠNG BIN
+// =============================
+void topBookReadBin(TopBook*& head, const char* fileName) {
+    char fullPath[100];
+    snprintf(fullPath, sizeof(fullPath), "../doc/outPut/bin/%s", fileName);
+    
+    
+}   
