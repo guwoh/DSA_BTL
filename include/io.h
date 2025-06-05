@@ -59,4 +59,10 @@ void topBookWriteBin(TopBook* head, const char* fileName);
 // Đọc danh sách top sách theo bin
 void topBookWriteBin(TopBook*& head, const char* fileName);
 
+// Hàm giải phóng bộ nhớ cho danh sách liên kết động
+void freeReaderList(Reader* head);
+void freeBorrowSlipList(BorrowSlip* head);
+void freeBookList(NodeBook* head);
+void freeTopicList(NodeTopic* head);
+
 #endif

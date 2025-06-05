@@ -9,11 +9,6 @@
 
 #define MAX_TOPIC 200
 
-// const char* TEXT_FILE_BOOK = "doc/outPut/txt/book.txt";
-// const char* BIN_FILE_BOOK = "doc/outPut/bin/book.bin";
-// const char* TEXT_FILE_READER = "doc/outPut/txt/reader.txt";
-// const char* BIN_FILE_READER = "doc/outPut/bin/reader.bin";
-
 
 // data book****************************************************    
 
@@ -152,7 +147,7 @@ void bookReadBin(NodeTopic** head, const char* fileName)
 // READER - TEXT
 // =============================
 void readerWriteText(Reader* head, const char* fileName) {
-    char fullPath[256];
+    char fullPath[100];
     snprintf(fullPath, sizeof(fullPath), "../doc/outPut/txt/%s", fileName);
 
     FILE* fp = fopen(fullPath, "w");
@@ -177,7 +172,7 @@ void readerWriteText(Reader* head, const char* fileName) {
 // READER - BINARY
 // =============================
 void readerWriteBin(Reader* head, const char* fileName) {
-    char fullPath[256];
+    char fullPath[100];
     snprintf(fullPath, sizeof(fullPath), "../doc/outPut/bin/%s", fileName);
 
     FILE* fp = fopen(fullPath, "wb");
@@ -197,7 +192,7 @@ void readerWriteBin(Reader* head, const char* fileName) {
 }
 
 void readerReadBin(Reader*& head, const char* fileName) { // truyền tham chiếu giống C++
-    char fullPath[256];
+    char fullPath[100];
     snprintf(fullPath, sizeof(fullPath), "../doc/outPut/bin/%s", fileName);
 
     FILE* fp = fopen(fullPath, "rb");
@@ -374,4 +369,44 @@ void topBookReadBin(TopBook*& head, const char* fileName) {
     snprintf(fullPath, sizeof(fullPath), "../doc/outPut/bin/%s", fileName);
     
     
+}
+
+// =============================
+// HÀM GIẢI PHÓNG BỘ NHỚ DANH SÁCH LIÊN KẾT ĐỘNG
+// =============================
+void freeReaderList(Reader* head) {
+    Reader* current = head;
+    while (current != NULL) {
+        Reader* next = current->next;
+        free(current);
+        current = next;
+    }
+}
+
+void freeBorrowSlipList(BorrowSlip* head) {
+    BorrowSlip* current = head;
+    while (current != NULL) {
+        BorrowSlip* next = current->next;
+        free(current);
+        current = next;
+    }
+}
+
+void freeBookList(NodeBook* head) {
+    NodeBook* current = head;
+    while (current != NULL) {
+        NodeBook* next = current->next;
+        free(current);
+        current = next;
+    }
+}
+
+void freeTopicList(NodeTopic* head) {
+    NodeTopic* current = head;
+    while (current != NULL) {
+        NodeTopic* next = current->next;
+        freeBookList(current->listBook); // Giải phóng danh sách sách của chủ đề này
+        free(current);
+        current = next;
+    }
 }   
