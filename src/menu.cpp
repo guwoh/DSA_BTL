@@ -123,7 +123,7 @@ void menuLoan() {
     printf("0. Quay lai menu chinh\n");
 }
 
-void choiceLoan(BorrowSlip* borrowList, Reader* readerList, NodeTopic* topicList) {
+void choiceLoan(BorrowSlip** borrowList, Reader* readerList, NodeTopic* topicList) {
     int choice;
     do {
         menuLoan();
@@ -133,22 +133,22 @@ void choiceLoan(BorrowSlip* borrowList, Reader* readerList, NodeTopic* topicList
         
         switch (choice) {
             case 1:
-                addBorrowSlip(&borrowList, readerList, topicList);
+                addBorrowSlip(borrowList, readerList, topicList);
                 break;
             case 2:
-                returnBook(borrowList);
+                returnBook(*borrowList);
                 break;
             case 3:
-                deleteBorrowSlip(&borrowList);
+                deleteBorrowSlip(borrowList);
                 break;
             case 4:
-                listBorrowSlips(borrowList);
+                listBorrowSlips(*borrowList);
                 break;
             case 5:
-                listUnreturnedBooks(borrowList);
+                listUnreturnedBooks(*borrowList);
                 break;
             case 6:
-                checkBorrowConditions(borrowList);
+                checkBorrowConditions(*borrowList);
                 break;
             case 0:
                 printf("Quay lai menu chinh...\n");

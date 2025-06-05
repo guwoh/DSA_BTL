@@ -157,7 +157,7 @@ void hienThiBorrowedBooks(BorrowSlip* head) {
     }
 
     while (current != NULL) {
-        if (current->returnDate == NULL || strlen(current->returnDate)) {  // Chưa trả
+        if (strlen(current->returnDate) == 0) {  // Kiểm tra sách chưa trả
             count++;
             printf("ID doc gia: %s\n", current->readerID);
             printf("  - ID sach: %s\n", current->bookID);
