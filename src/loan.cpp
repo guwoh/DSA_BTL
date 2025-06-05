@@ -72,7 +72,6 @@ void addBorrowSlip(BorrowSlip** head, Reader* readerList, NodeTopic* topicList) 
 void returnBook(BorrowSlip* head) {
     char slipID[MAX_ID_LEN];
     cout << "Nhap ma phieu muon can tra: ";
-    cin.ignore();
     cin.getline(slipID, MAX_ID_LEN);
 
     BorrowSlip* current = head;
@@ -98,7 +97,6 @@ void returnBook(BorrowSlip* head) {
 void deleteBorrowSlip(BorrowSlip** head) {
     char slipID[MAX_ID_LEN];
     cout << "Nhap ma phieu muon can xoa: ";
-    cin.ignore();
     cin.getline(slipID, MAX_ID_LEN);
 
     BorrowSlip* current = *head;
@@ -146,7 +144,6 @@ void listBorrowSlips(BorrowSlip* head) {
 void searchSlipByReader(BorrowSlip* head) {
     char readerID[MAX_ID_LEN];
     cout << "Nhap ID doc gia can tim: ";
-    cin.ignore();
     cin.getline(readerID, MAX_ID_LEN);
 
     bool found = false;
