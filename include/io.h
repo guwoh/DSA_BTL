@@ -1,31 +1,9 @@
-// #ifndef IO_H
-// #define IO_H
-
-// #include "book.h"
-// #include "member.h"
-
-// // book.h
-// // all this  function below use for book
-
-// void bookWriteText(); // write text file for human
-// void bookWriteBin(); // write bin file for machine
-// void bookReadBin(); // machine read bin flie to recovery data of linked list Topic Book
-
-
-
-// // member.h
-// // all this function below use for reader
-
-// void readerWriteText(); // write text file for human
-// void readerWriteBin(); // write bin file for machine
-// void readerReadBin(); // machine read bin flie to recovery data of linked list Reader 
-
-// #endif
 #ifndef IO_H
 #define IO_H
 
 #include "book.h"
 #include "member.h"
+#include "utils.h"
 
 // Ghi sách (text)
 void bookWriteText(NodeTopic* head, const char* fileName);
@@ -44,5 +22,28 @@ void readerWriteBin(Reader* head, const char* fileName);
 
 // Đọc người đọc từ file nhị phân
 void readerReadBin(Reader*& head, const char* fileName);
+
+
+// Ghi danh sách vay mượn sách theo Text
+void writeBorrowSlipText(BorrowSlip* head, const char* fileName);
+
+// Ghi danh sách vay mượn sách theo Bin
+void writeBorrowSlipBin(BorrowSlip* head, const char* fileName);
+
+// Đọc danh sách vay mượn sách theo Bin
+void readBorrowSlipBin(BorrowSlip*& head, const char* fileName);
+
+// Ghi danh sách top độc giả và top sách theo text
+void writeTopReaderText(TopReader* head, const char* fileName);
+void writeTopBookText(TopBook* head, const char* fileName);
+
+// Ghi danh sách top độc giả và top sách theo bin
+void writeTopReaderBin(TopReader* head, const char* fileName);
+void writeTopBookBin(TopBook* head, const char* fileName);
+
+// Đọc danh sách top độc giả và top sách theo bin
+void readTopReaderBin(TopReader*& head, const char* fileName);
+void readTopBookBin(TopBook*& head, const char* fileName);
+
 
 #endif
