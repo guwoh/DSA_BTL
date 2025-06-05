@@ -5,8 +5,8 @@
 #include "../include/utils.h"
 #include "../include/io.h"
 #include "../include/menu.h"
-// // hiep is here
-
+// hiep is here
+// test ubuntu
 int main() {
     NodeTopic* topicList;
     initTopic(&topicList); // Khởi tạo danh sách chủ đề sách
