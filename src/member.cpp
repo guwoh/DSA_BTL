@@ -18,7 +18,6 @@ Reader* createReader() {
     Reader* newReader = new Reader;
 
     cout << "Nhap ID: ";
-    cin.ignore();
     cin.getline(newReader->id, MAX_ID_LEN);
 
     cout << "Nhap ten: ";
@@ -62,7 +61,6 @@ void addReader(Reader** head) {
 void editReader(Reader* head) {
     char id[MAX_ID_LEN];
     cout << "Nhap ID doc gia can sua: ";
-    cin.ignore();
     cin.getline(id, MAX_ID_LEN);
 
     Reader* current = head;
@@ -96,7 +94,6 @@ void editReader(Reader* head) {
 void deleteReader(Reader** head) {
     char id[MAX_ID_LEN];
     cout << "Nhap ID doc gia can xoa: ";
-    cin.ignore();
     cin.getline(id, MAX_ID_LEN);
 
     Reader* current = *head;
@@ -124,7 +121,6 @@ void deleteReader(Reader** head) {
 void searchByName(Reader* head) {
     char name[MAX_NAME_LEN];
     cout << "Nhap ten doc gia can tim: ";
-    cin.ignore();
     cin.getline(name, MAX_NAME_LEN);
 
     bool found = false;
@@ -148,7 +144,6 @@ void searchByName(Reader* head) {
 void searchByID(Reader* head) {
     char id[MAX_ID_LEN];
     cout << "Nhap ID doc gia can tim: ";
-    cin.ignore();
     cin.getline(id, MAX_ID_LEN);
 
     Reader* current = head;
