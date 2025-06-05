@@ -87,10 +87,18 @@ int main() {
 
     borrowSlipWriteBin(borrowList, "borrowSlip.bin");
     borrowSlipWriteText(borrowList, "borrowSlip.txt");
-    
-        
+
+
     printf("\n          THOAT CHUONG TRINH!");
     printf("\n-----------------------------------------\n");
+    
+    // giải phóng bộ nhớ io.cpp
+    // freeReaderList(readerList);
+    // freeBorrowSlipList(borrowList);
+    // //freeBookList(topicList);
+    // freeTopicList(topicList);
+    
+    
     return 0;
 }
 

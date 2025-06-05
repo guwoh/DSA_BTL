@@ -1,2 +1,19 @@
-2;123;20102045;22/02/2024;22/02/2025;
-1;123;20234009;22/02/2022;22/03/2022;
+----------------DANH SACH PHIEU MUON----------------
+
+Phieu muon thu 1:
+ID phieu: 2
+ ID sach: 123
+ ID nguoi doc: 20102045
+ Ngay muon: 22/02/2024
+ Ngay het han: 22/02/2025
+ Ngay tra: 
+
+Phieu muon thu 2:
+ID phieu: 1
+ ID sach: 123
+ ID nguoi doc: 20234009
+ Ngay muon: 22/02/2022
+ Ngay het han: 22/03/2022
+ Ngay tra: 
+
+--------------------------------

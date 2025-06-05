@@ -9,11 +9,6 @@
 
 #define MAX_TOPIC 200
 
-// const char* TEXT_FILE_BOOK = "doc/outPut/txt/book.txt";
-// const char* BIN_FILE_BOOK = "doc/outPut/bin/book.bin";
-// const char* TEXT_FILE_READER = "doc/outPut/txt/reader.txt";
-// const char* BIN_FILE_READER = "doc/outPut/bin/reader.bin";
-
 
 // data book****************************************************    
 
@@ -31,19 +26,21 @@ void bookWriteText(NodeTopic* head, const char* fileName)
     }
 
     NodeTopic* topic = head; // khai bao 
+    fprintf(fp, "----------------DANH SACH TOPIC SACH----------------\n");
     while (topic) { // duyet qua tung list topic
         fprintf(fp, "Topic: %s\n", topic->nameTopic); // print name of topic
         NodeBook* book = topic->listBook;
         while (book) { // duyet qua tung  list book
             Book b = book->book;
-            fprintf(fp, "%s;%s;%s;%d;%d\n", b.id, b.name, b.author, b.year, b.quantity);
+            fprintf(fp, "ID sach: %s\n  Ten sach: %s\n  Tac gia: %s\n  Nam xuat ban: %d\n  So luong: %d\n", b.id, b.name, b.author, b.year, b.quantity);
             book = book->next;
         }
-        fprintf(fp, "END_TOPIC\n");
+        fprintf(fp, "END_TOPIC\n\n");
         topic = topic->next;
     }
 
     fclose(fp);
+    fprintf(fp, "--------------------------------\n");
     printf("Da luu danh sach vao file text thanh cong %s\n", fullPath);
 }
 
@@ -152,7 +149,7 @@ void bookReadBin(NodeTopic** head, const char* fileName)
 // READER - TEXT
 // =============================
 void readerWriteText(Reader* head, const char* fileName) {
-    char fullPath[256];
+    char fullPath[100];
     snprintf(fullPath, sizeof(fullPath), "../doc/outPut/txt/%s", fileName);
 
     FILE* fp = fopen(fullPath, "w");
@@ -160,10 +157,13 @@ void readerWriteText(Reader* head, const char* fileName) {
     {
         return;
     }
-
+    fprintf(fp, "----------------DANH SACH NGUOI DOC----------------\n");
     Reader* current = head;
+    int count = 0;
     while (current != NULL) {
-        fprintf(fp, "%s;%s;%s;%s;%s;%s\n",
+        count++;
+        fprintf(fp, "\nNguoi doc thu %d:\n", count);
+        fprintf(fp, "ID nguoi doc: %s\n Ten nguoi doc: %s\n Gioi tinh: %s\n Ngay sinh: %s\n Ngay cap the: %s\n Ngay het han: %s\n",
                 current->id, current->name, current->gender,
                 current->dob, current->cardIssueDate, current->cardExpiryDate);
         current = current->next;
@@ -177,7 +177,7 @@ void readerWriteText(Reader* head, const char* fileName) {
 // READER - BINARY
 // =============================
 void readerWriteBin(Reader* head, const char* fileName) {
-    char fullPath[256];
+    char fullPath[100];
     snprintf(fullPath, sizeof(fullPath), "../doc/outPut/bin/%s", fileName);
 
     FILE* fp = fopen(fullPath, "wb");
@@ -197,7 +197,7 @@ void readerWriteBin(Reader* head, const char* fileName) {
 }
 
 void readerReadBin(Reader*& head, const char* fileName) { // truyền tham chiếu giống C++
-    char fullPath[256];
+    char fullPath[100];
     snprintf(fullPath, sizeof(fullPath), "../doc/outPut/bin/%s", fileName);
 
     FILE* fp = fopen(fullPath, "rb");
@@ -242,15 +242,18 @@ void borrowSlipWriteText(BorrowSlip* head, const char* fileName) {
     if (!fp) {
         return;
     }
-
+    fprintf(fp, "----------------DANH SACH PHIEU MUON----------------\n");
     BorrowSlip* current = head; // khai bao con tro current
+    int count = 0;
     while (current != NULL) {
-        fprintf(fp, "%s;%s;%s;%s;%s;%s\n",
+        count++;
+        fprintf(fp, "\nPhieu muon thu %d:\n", count);
+        fprintf(fp, "ID phieu: %s\n ID sach: %s\n ID nguoi doc: %s\n Ngay muon: %s\n Ngay het han: %s\n Ngay tra: %s\n",
                 current->slipID, current->bookID, current->readerID,
                 current->borrowDate, current->dueDate, current->returnDate);
         current = current->next;
     }
-
+    fprintf(fp, "\n--------------------------------\n");
     fclose(fp);
     printf("Da luu danh sach phieu muon vao file text thanh cong %s\n", fullPath);
 }
@@ -374,4 +377,44 @@ void topBookReadBin(TopBook*& head, const char* fileName) {
     snprintf(fullPath, sizeof(fullPath), "../doc/outPut/bin/%s", fileName);
     
     
+}
+
+// =============================
+// HÀM GIẢI PHÓNG BỘ NHỚ DANH SÁCH LIÊN KẾT ĐỘNG
+// =============================
+void freeReaderList(Reader* head) {
+    Reader* current = head;
+    while (current != NULL) {
+        Reader* next = current->next;
+        free(current);
+        current = next;
+    }
+}
+
+void freeBorrowSlipList(BorrowSlip* head) {
+    BorrowSlip* current = head;
+    while (current != NULL) {
+        BorrowSlip* next = current->next;
+        free(current);
+        current = next;
+    }
+}
+
+void freeBookList(NodeBook* head) {
+    NodeBook* current = head;
+    while (current != NULL) {
+        NodeBook* next = current->next;
+        free(current);
+        current = next;
+    }
+}
+
+void freeTopicList(NodeTopic* head) {
+    NodeTopic* current = head;
+    while (current != NULL) {
+        NodeTopic* next = current->next;
+        freeBookList(current->listBook); // Giải phóng danh sách sách của chủ đề này
+        free(current);
+        current = next;
+    }
 }   
