@@ -1,43 +1,14 @@
-----------------DANH SACH TOPIC SACH----------------
 Topic: toan
-ID sach: giai
-  Ten sach: giai tich 1
-  Tac gia: fami
-  Nam xuat ban: 2023
-  So luong: 10
-ID sach: 123
-  Ten sach: 
-  Tac gia: dsa
-  Nam xuat ban: 2020
-  So luong: 10
+MI11;giai tich 1;fami;2023;10
+123;;dsa;2020;10
 END_TOPIC
-
 Topic: Tieng Anh
-ID sach: D003
-  Ten sach: Basic Speaking
-  Tac gia: D
-  Nam xuat ban: 2018
-  So luong: 30
+D003;Basic Speaking;D;2018;30
 END_TOPIC
-
 Topic: Van hoc
-ID sach: C002
-  Ten sach: Truyen Kieu
-  Tac gia: Nguyen Du
-  Nam xuat ban: 2010
-  So luong: 15
+C002;Truyen Kieu;Nguyen Du;2010;15
 END_TOPIC
-
 Topic: Toan hoc
-ID sach: A001
-  Ten sach: Giai tich
-  Tac gia: A
-  Nam xuat ban: 2020
-  So luong: 10
-ID sach: B001
-  Ten sach: Dai so
-  Tac gia: B
-  Nam xuat ban: 2015
-  So luong: 20
+A001;Giai tich;A;2020;10
+B001;Dai so;B;2015;20
 END_TOPIC
-
