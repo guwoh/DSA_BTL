@@ -1,6 +1,5 @@
 ----------------DANH SACH TOPIC SACH----------------
 Topic: Tieng Anh
-// hiep is here
 ID sach: IE12
   Ten sach: IELTS Writing
   Tac gia: Harry Potter
