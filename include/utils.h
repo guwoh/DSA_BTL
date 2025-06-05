@@ -1,6 +1,9 @@
 #ifndef UTILS_H
 #define UTILS_H
 #include<stdio.h>
+#include "member.h" // struct reader        
+#include "book.h" // struct book    
+#include "loan.h" // struct borrow slip
 
 typedef struct {
     Reader* reader;
@@ -12,7 +15,7 @@ typedef struct {
     int count;
 } TopBook; // Top sách mượn nhiều nhất
 
-void test_utlis();
+
 
 // HÀM liên quan đến thống kê
 // Top 3 sách được mượn nhiều nhất

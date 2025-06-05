@@ -1,10 +1,11 @@
 #ifndef IO_H
 #define IO_H
 
-#include "book.h"
-#include "member.h"
-#include "utils.h"
-
+#include "book.h" // struct book
+#include "member.h" // struct reader
+#include "utils.h" // struct top reader, top book
+#include "loan.h" // struct borrow slip
+// BOOK
 // Ghi sách (text)
 void bookWriteText(NodeTopic* head, const char* fileName);
 
@@ -14,6 +15,8 @@ void bookWriteBin(NodeTopic* head, const char* fileName);
 // Đọc sách từ file nhị phân
 void bookReadBin(NodeTopic** head, const char* fileName);
 
+//** */
+// READER
 // Ghi người đọc (text)
 void readerWriteText(Reader* head, const char* fileName);
 
@@ -23,27 +26,37 @@ void readerWriteBin(Reader* head, const char* fileName);
 // Đọc người đọc từ file nhị phân
 void readerReadBin(Reader*& head, const char* fileName);
 
-
+//** */
+// BORROW SLIP
 // Ghi danh sách vay mượn sách theo Text
-void writeBorrowSlipText(BorrowSlip* head, const char* fileName);
+void borrowSlipWriteText(BorrowSlip* head, const char* fileName);
 
 // Ghi danh sách vay mượn sách theo Bin
-void writeBorrowSlipBin(BorrowSlip* head, const char* fileName);
+void borrowSlipWriteBin(BorrowSlip* head, const char* fileName);
 
 // Đọc danh sách vay mượn sách theo Bin
-void readBorrowSlipBin(BorrowSlip*& head, const char* fileName);
+void borrowSlipReadBin(BorrowSlip** head, const char* fileName);
 
-// Ghi danh sách top độc giả và top sách theo text
-void writeTopReaderText(TopReader* head, const char* fileName);
-void writeTopBookText(TopBook* head, const char* fileName);
+//** */
+// TOP READER
+// Ghi danh sách top độc giả theo text
+void topReaderWriteText(TopReader* head, const char* fileName);
 
-// Ghi danh sách top độc giả và top sách theo bin
-void writeTopReaderBin(TopReader* head, const char* fileName);
-void writeTopBookBin(TopBook* head, const char* fileName);
+// Ghi danh sách top độc giả theo bin
+void topReaderWriteBin(TopReader* head, const char* fileName);
 
-// Đọc danh sách top độc giả và top sách theo bin
-void readTopReaderBin(TopReader*& head, const char* fileName);
-void readTopBookBin(TopBook*& head, const char* fileName);
+// Đọc danh sách top độc giả theo bin
+void topReaderWriteBin(TopReader*& head, const char* fileName);
 
+//** */ 
+// TOP BOOK
+// Ghi danh sách top sách theo text
+void topBookwriteText(TopBook* head, const char* fileName);
+
+// Ghi danh sách top sách theo bin
+void topBookWriteBin(TopBook* head, const char* fileName);
+
+// Đọc danh sách top sách theo bin
+void topBookWriteBin(TopBook*& head, const char* fileName);
 
 #endif

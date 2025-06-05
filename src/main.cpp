@@ -14,7 +14,7 @@ int main() {
     BorrowSlip* borrowList = NULL;
     int luaChon;
 
-    printf("Doc du lieu tu kho (neu co)...\n");
+    printf("Doc du lieu tu kho du lieu...\n");
     //  cập nhật data từ file bin
 
     // book, data số lượng sách trong kho
@@ -24,6 +24,8 @@ int main() {
     readerReadBin(readerList, "reader.bin"); // cần thay đổi biến được truyền 
 
     // loan, data phiếu mượn
+    borrowSlipReadBin(&borrowList, "borrowSlip.bin"); // cần thay đổi biến được truyền 
+
 
     // utilis, data thống kê
 
@@ -32,13 +34,13 @@ int main() {
     else if(topicList != NULL) printf("Cap nhat du lieu sach thanh cong!\n");
     // member
     if(readerList == NULL) printf("Khong co du lieu ve thanh vien!\n");
-    else if(readerList == NULL) printf("Cap nhat du lieu thanh vien thanh cong!\n");
+    else if(readerList != NULL) printf("Cap nhat du lieu thanh vien thanh cong!\n");
     //borrow
-    if(topicList == NULL) printf("Khong co du lieu ve muon sach!\n");
-    else if(topicList == NULL) printf("Cap nhat du lieu sach duoc muon thanh cong!\n");
+    if(borrowList == NULL) printf("Khong co du lieu ve muon sach!\n");
+    else if(borrowList != NULL) printf("Cap nhat du lieu sach duoc muon thanh cong!\n");
     // utilis
-    if(topicList == NULL) printf("Khong co du lieu ve thong ke!\n");
-    else if(topicList == NULL) printf("Cap nhat du lieu ve thong ke thanh cong!\n");
+    //if(topicList == NULL) printf("Khong co du lieu ve thong ke!\n");
+    //else if(topicList == NULL) printf("Cap nhat du lieu ve thong ke thanh cong!\n");
     
     printf("\n");
     do {
@@ -79,13 +81,17 @@ int main() {
     bookWriteText(topicList, "book.txt");
     bookWriteBin(topicList, "book.bin");
 
+
     readerWriteText(readerList, "reader.txt");
     readerWriteBin(readerList, "reader.bin");
+
+    borrowSlipWriteBin(borrowList, "borrowSlip.bin");
+    borrowSlipWriteText(borrowList, "borrowSlip.txt");
     
+        
     printf("\n          THOAT CHUONG TRINH!");
     printf("\n-----------------------------------------\n");
     return 0;
 }
 
 
-// test  cursor
