@@ -93,10 +93,10 @@ int main() {
     printf("\n-----------------------------------------\n");
     
     // giải phóng bộ nhớ io.cpp
-    freeReaderList(readerList);
-    freeBorrowSlipList(borrowList);
-    //freeBookList(topicList);
-    freeTopicList(topicList);
+    // freeReaderList(readerList);
+    // freeBorrowSlipList(borrowList);
+    // //freeBookList(topicList);
+    // freeTopicList(topicList);
     
     
     return 0;

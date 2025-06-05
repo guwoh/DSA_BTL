@@ -1,4 +1,33 @@
-20234009;Nguyen Hieu;Nam;11/03/2005;01/06/2025;01/09/2030
-20102045;Nguyen A;Nam;02/12/2004;25/05/2024;25/06/2040
-23301234;Tran Van B;Nu;10/07/2003;05/06/2023;05/08/2035
-12345678;Trung D;Nam;01/01/2001;02/10/2024;02/10/2044
+----------------DANH SACH NGUOI DOC----------------
+
+Nguoi doc thu 1:
+ID nguoi doc: 20234009
+ Ten nguoi doc: Nguyen Hieu
+ Gioi tinh: Nam
+ Ngay sinh: 11/03/2005
+ Ngay cap the: 01/06/2025
+ Ngay het han: 01/09/2030
+
+Nguoi doc thu 2:
+ID nguoi doc: 20102045
+ Ten nguoi doc: Nguyen A
+ Gioi tinh: Nam
+ Ngay sinh: 02/12/2004
+ Ngay cap the: 25/05/2024
+ Ngay het han: 25/06/2040
+
+Nguoi doc thu 3:
+ID nguoi doc: 23301234
+ Ten nguoi doc: Tran Van B
+ Gioi tinh: Nu
+ Ngay sinh: 10/07/2003
+ Ngay cap the: 05/06/2023
+ Ngay het han: 05/08/2035
+
+Nguoi doc thu 4:
+ID nguoi doc: 12345678
+ Ten nguoi doc: Trung D
+ Gioi tinh: Nam
+ Ngay sinh: 01/01/2001
+ Ngay cap the: 02/10/2024
+ Ngay het han: 02/10/2044
