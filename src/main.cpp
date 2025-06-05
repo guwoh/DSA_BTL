@@ -56,7 +56,7 @@ int main() {
                 choiceMember(&readerList);
                 break;
             case 3:
-                choiceLoan(borrowList, readerList, topicList);
+                choiceLoan(&borrowList, readerList, topicList);
                 break;
             case 4:
                 choiceThongKe(topicList, borrowList, readerList);
