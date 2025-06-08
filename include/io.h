@@ -3,8 +3,8 @@
 
 #include "book.h" // struct book
 #include "member.h" // struct reader
-#include "utils.h" // struct top reader, top book
 #include "loan.h" // struct borrow slip
+
 // BOOK
 // Ghi sách (text)
 void bookWriteText(NodeTopic* head, const char* fileName);
@@ -37,32 +37,6 @@ void borrowSlipWriteBin(BorrowSlip* head, const char* fileName);
 // Đọc danh sách vay mượn sách theo Bin
 void borrowSlipReadBin(BorrowSlip** head, const char* fileName);
 
-//** */
-// TOP READER
-// Ghi danh sách top độc giả theo text
-void topReaderWriteText(TopReader* head, const char* fileName);
 
-// Ghi danh sách top độc giả theo bin
-void topReaderWriteBin(TopReader* head, const char* fileName);
-
-// Đọc danh sách top độc giả theo bin
-void topReaderWriteBin(TopReader*& head, const char* fileName);
-
-//** */ 
-// TOP BOOK
-// Ghi danh sách top sách theo text
-void topBookwriteText(TopBook* head, const char* fileName);
-
-// Ghi danh sách top sách theo bin
-void topBookWriteBin(TopBook* head, const char* fileName);
-
-// Đọc danh sách top sách theo bin
-void topBookWriteBin(TopBook*& head, const char* fileName);
-
-// Hàm giải phóng bộ nhớ cho danh sách liên kết động
-void freeReaderList(Reader* head);
-void freeBorrowSlipList(BorrowSlip* head);
-void freeBookList(NodeBook* head);
-void freeTopicList(NodeTopic* head);
 
 #endif
